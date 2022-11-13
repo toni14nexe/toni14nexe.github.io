@@ -40,7 +40,7 @@
   
   <script>
     import LogIn from './HeaderLogOut/LogIn.vue'
-    import PriceList from './HeaderLogOut/PriceList.vue'
+    import PriceList from './PriceList.vue'
     import ForgotPassword from './HeaderLogOut/ForgotPassword.vue'
     import FirstPage from './HeaderLogOut/FirstPage.vue'
     import Error from './HeaderLogOut/Error.vue'
