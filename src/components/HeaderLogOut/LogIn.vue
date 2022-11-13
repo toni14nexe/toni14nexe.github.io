@@ -9,7 +9,7 @@
               <div class="pb-5">
 
                 <h2 class="fw-bold mb-2 text-uppercase">Employee Login</h2>
-                <div id="qr-reader" style="width: 100%; height: 100%;"></div>
+                <div id="reader" style="width: 100%; height: 100%;"></div>
                 <h1 id="dom"></h1>
 
                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
@@ -44,6 +44,31 @@
   import checkInputs from '../../assets/checkInputs'
   import MD5 from "crypto-js/md5";
   import sql from "../../assets/sql.js"
+
+  onScanSuccess(decodedText, decodedResult) {
+    console.log(`Code scanned = ${decodedText}`, decodedResult)
+    document.getElementById("dom").innerHTML = decodedResult
+
+  const html5QrCode = new Html5Qrcode(“reader”);
+html5QrCode.start(
+   cameraId, // retreived in the previous step.
+   {
+      fps: 10,    // sets the framerate to 10 frame per second 
+      qrbox: 250  // sets only 250 X 250 region of viewfinder to
+                  // scannable, rest shaded.
+ },
+ qrCodeMessage => {
+     // do something when code is read. For example:
+     document.getElementById("dom").innerHTML = 'decodedResult'
+ },
+ errorMessage => {
+     // parse error, ideally ignore it. For example:
+     document.getElementById("dom").innerHTML = 'decodedResult'
+ })
+ .catch(err => {
+     // Start failed, handle it. For example, 
+     console.log(`Unable to start scanning, error: ${err}`);
+ });
 
   export default {
     data(){
@@ -85,12 +110,7 @@
         if(this.emailMessage == null && this.passwordMessage == null)
           window.location = sql.LogIn() + "?password=" + MD5(this.password).toString() + "&email=" + this.email
             + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration
-      },
-
-      onScanSuccess(decodedText, decodedResult) {
-    console.log(`Code scanned = ${decodedText}`, decodedResult)
-    document.getElementById("dom").innerHTML = decodedResult
-  }
+      }
     }
   }
 </script>
