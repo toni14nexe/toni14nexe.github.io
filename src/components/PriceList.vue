@@ -7,6 +7,7 @@
                     <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" class="col-sm">
                         <a :href="'#'+subType.type">
                             <img :src="imageUrl[0]+subType.type+imageUrl[1]" class="product-img">
+                            <img src="./images/beer.jpeg">
                         </a>
                     </div>
                 </div>
@@ -133,7 +134,7 @@
                     }
                 },
                 productsList: null,
-                imageUrl: ['/assets/images/', '.jpeg']
+                imageUrl: ['../assets/images/', '.jpeg']
             }
         },
         async mounted(){
