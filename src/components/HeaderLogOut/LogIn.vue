@@ -45,11 +45,6 @@
   import MD5 from "crypto-js/md5";
   import sql from "../../assets/sql.js"
 
-  function onScanSuccess(decodedText, decodedResult) {
-    console.log(`Code scanned = ${decodedText}`, decodedResult)
-    document.getElementById("dom").innerHTML = decodedResult
-  }
-
   export default {
     data(){
       return{
@@ -90,7 +85,12 @@
         if(this.emailMessage == null && this.passwordMessage == null)
           window.location = sql.LogIn() + "?password=" + MD5(this.password).toString() + "&email=" + this.email
             + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration
-      }
+      },
+
+      onScanSuccess(decodedText, decodedResult) {
+    console.log(`Code scanned = ${decodedText}`, decodedResult)
+    document.getElementById("dom").innerHTML = decodedResult
+  }
     }
   }
 </script>
