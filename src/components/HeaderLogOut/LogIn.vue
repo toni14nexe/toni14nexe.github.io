@@ -47,7 +47,7 @@
 
   function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code scanned = ${decodedText}`, decodedResult)
-    window.location = decodedText
+    window.location = decodedResult
   }
 
   export default {
