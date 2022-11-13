@@ -47,7 +47,7 @@
 
   function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code scanned = ${decodedText}`, decodedResult)
-    document.getElementById("dom").innerHTML = decodedText
+    document.getElementById("dom").innerHTML = decodedResult
   }
 
   export default {
