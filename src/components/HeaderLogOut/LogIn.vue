@@ -10,7 +10,7 @@
 
                 <h2 class="fw-bold mb-2 text-uppercase">Employee Login</h2>
                 <div id="qr-reader" style="width: 100%; height: 100%;"></div>
-                <h1>{{decodedResult}}</h1>
+                <h1 id="dom"></h1>
 
                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
@@ -47,7 +47,7 @@
 
   function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code scanned = ${decodedText}`, decodedResult)
-    window.location = decodedResult
+    document.getElementById("dom").innerHTML = decodedText
   }
 
   export default {
@@ -67,7 +67,7 @@
       html5QrcodeScanner.render(onScanSuccess);
       if(window.location.search == '?wrongLogIn'){
           this.emailMessage = 'Wrong email or password!'
-          window.history.pushState({}, document.title, "/");
+          window.history.pushState({}, document.title, "/")
         }
     },
     methods:{
