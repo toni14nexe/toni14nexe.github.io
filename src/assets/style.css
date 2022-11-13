@@ -1,0 +1,170 @@
+:root{
+    --gray: #495057;
+    --dark-gray: #343a40;
+    --pink: #f361fb;
+    --purple: rgba(153, 26, 217, 1);
+}
+
+.gradient-custom {
+    background: var(--purple);
+    background: -webkit-linear-gradient(to right, rgba(153, 26, 217, 1), rgba(37, 117, 252, 1), rgba(153, 26, 217, 1));
+    background: linear-gradient(to right, rgba(153, 26, 217, 1), rgba(37, 117, 252, 1), rgba(153, 26, 217, 1));
+    min-height: calc(100vh - 290px);
+}
+
+.gradient-color {
+    background: var(--purple);
+    background: -webkit-linear-gradient(to right, rgba(153, 26, 217, 1), rgba(37, 117, 252, 1), rgba(153, 26, 217, 1));
+    background: linear-gradient(to right, rgba(153, 26, 217, 1), rgba(37, 117, 252, 1), rgba(153, 26, 217, 1));
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar { 
+    width: 0 !important 
+}
+
+body {
+    font-family: "Trueno";
+    min-height: 100%;
+    padding-top: 80px;
+}
+
+.title{
+    font-size: 1.8rem;
+    color: var(--pink);
+    transition: ease-in 0.3s;
+}
+
+.title:hover{
+    transition: ease-in 0.3s;
+    letter-spacing: 1px;
+    color: var(--pink);
+}
+
+.a{
+    transition: ease-in 0.3s;
+    color: white;
+}
+
+.a:hover{
+    transition: ease-in 0.3s;
+    color: var(--pink);
+    letter-spacing: 1px;
+}
+
+.hr{
+    height: 2px;
+    width: 100%;
+    margin-left: -16px;
+    background-color: var(--dark-gray);
+    position: absolute;
+    bottom: 0;
+}
+
+.vl{
+    width: 2px;
+    background-color: white;
+    margin-right: 5px;
+}
+
+.link{
+    transition: 0.3s;
+    color: white;
+    text-decoration: underline;
+}
+
+.link:hover{
+    color: white;
+    transition: 0.3s;
+    letter-spacing: 1px;
+    color: var(--pink)
+}
+
+.navbar{
+    position:fixed;
+    top:0;
+    width: 100%;
+    z-index: 99999999;
+}
+
+.navbar-toggler{
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.my-btn{
+    transition: 0.3s;
+}
+
+.my-btn:hover{
+    transition: 0.3s;
+    background-color: var(--pink);
+}
+
+.my-input{
+    background-color: var(--gray);
+    color: white;
+}
+
+.my-input:focus {
+    background-color: var(--dark-gray);
+    color: white;
+}
+
+.card{
+    border-radius: 1rem;
+}
+
+.active{
+    color: var(--pink);
+}
+
+.error-message{
+    color: var(--pink);
+    text-decoration: bold;
+    margin-bottom: 0px;
+}
+
+.favicon{
+    width: 40px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    padding-bottom: 5px;
+}
+
+.title-div{
+    transition: ease-in 0.3s;
+    border-radius: 50px;
+}
+
+.title-div:hover{
+    transition: ease-in 0.3s;
+    background-color: var(--gray);
+    padding-left: 17px;
+    cursor: pointer;
+}
+
+.title-div:hover .title{
+    transition: ease-in 0.3s;
+    letter-spacing: 1px;
+    color: var(--pink);
+}
+
+.notification{
+    color: white;
+}
+
+.vh-100{
+    min-height: calc(100vh - 290px);
+}
+
+.bottom-border{
+    border-bottom: solid var(--purple) 2px;
+}
