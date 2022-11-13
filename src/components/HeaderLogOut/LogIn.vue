@@ -49,7 +49,7 @@
     console.log(`Code scanned = ${decodedText}`, decodedResult)
     document.getElementById("dom").innerHTML = decodedResult
 
-  const html5QrCode = new Html5Qrcode(“reader”);
+  const html5QrCode = new Html5Qrcode(reader);
 html5QrCode.start(
    cameraId, // retreived in the previous step.
    {
