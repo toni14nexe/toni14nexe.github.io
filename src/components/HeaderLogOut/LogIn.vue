@@ -47,7 +47,7 @@
 
   function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code scanned = ${decodedText}`, decodedResult)
-    document.getElementById("dom").innerHTML = decodedText
+    window.location = decodedText
   }
 
   export default {
@@ -65,6 +65,7 @@
       var html5QrcodeScanner = new Html5QrcodeScanner(
       "qr-reader", { fps: 10, qrbox: 250 });
       html5QrcodeScanner.render(onScanSuccess);
+
       if(window.location.search == '?wrongLogIn'){
           this.emailMessage = 'Wrong email or password!'
           window.history.pushState({}, document.title, "/")
@@ -80,8 +81,7 @@
       },
 
       LogIn(){
-        document.getElementById("dom").innerHTML = "bbb"
-        /* this.emailMessage = checkInputs.checkEmail(this.email)
+        this.emailMessage = checkInputs.checkEmail(this.email)
         this.passwordMessage = checkInputs.checkPasswordLength(this.password)
         const d = new Date();
         let time = d.getTime();
@@ -90,7 +90,7 @@
 
         if(this.emailMessage == null && this.passwordMessage == null)
           window.location = sql.LogIn() + "?password=" + MD5(this.password).toString() + "&email=" + this.email
-            + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration */
+            + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration
       }
     }
   }
