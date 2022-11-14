@@ -80,6 +80,8 @@
         this.emailMessage = 'Wrong email or password!'
         window.history.pushState({}, document.title, "/")
       }
+
+      document.getElementById('qr-reader').style.border = 'none'
     },
     methods:{
       switchToForgotPassword(){
@@ -129,7 +131,41 @@
     color: white;
   }
 
+  #qr-reader__dashboard_section_swaplink{
+    display: none
+  }
+
+  #qr-reader{
+    border: 0px solid silver;
+  }
+
+  #qr-reader__status_span{
+    display: none;
+  }
+
   .hr-login{
     background-color: var(--gray)
+  }
+
+  #qr-reader__dashboard_section_csr button{
+    background-color: var(--dark-gray);
+    color: white;
+    transition: 0.3s;
+    border: sold 10px white;
+    border-radius: 5px;
+    padding: 10px 30px 10px 30px;
+  }
+
+  #qr-reader__dashboard_section_csr button:hover{
+    transition: 0.3s;
+    background-color: var(--pink);
+  }
+
+  #qr-reader__status_span{
+    color: white
+  }
+
+  #qr-reader div span a{
+    color: white;
   }
 </style>
