@@ -9,6 +9,8 @@
               <div class="pb-5">
 
                 <h2 class="fw-bold mb-2 text-uppercase">Employee Login</h2>
+                <div id="qr-reader" style="width: 100%; height: 100%;"></div>
+                <h1 id="dom"></h1>
 
                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
@@ -43,6 +45,11 @@
   import MD5 from "crypto-js/md5";
   import sql from "../../assets/sql.js"
 
+  function onScanSuccess(decodedText, decodedResult) {
+    console.log(`Code scanned = ${decodedText}`, decodedResult)
+    document.getElementById("dom").innerHTML = "aaa"
+  }
+
   export default {
     data(){
       return{
@@ -55,6 +62,9 @@
       }
     },
     mounted(){
+      var html5QrcodeScanner = new Html5QrcodeScanner(
+      "qr-reader", { fps: 10, qrbox: 250 });
+      html5QrcodeScanner.render(onScanSuccess);
       if(window.location.search == '?wrongLogIn'){
           this.emailMessage = 'Wrong email or password!'
           window.history.pushState({}, document.title, "/")
@@ -70,7 +80,8 @@
       },
 
       LogIn(){
-        this.emailMessage = checkInputs.checkEmail(this.email)
+        document.getElementById("dom").innerHTML = "bbb"
+        /* this.emailMessage = checkInputs.checkEmail(this.email)
         this.passwordMessage = checkInputs.checkPasswordLength(this.password)
         const d = new Date();
         let time = d.getTime();
@@ -79,7 +90,7 @@
 
         if(this.emailMessage == null && this.passwordMessage == null)
           window.location = sql.LogIn() + "?password=" + MD5(this.password).toString() + "&email=" + this.email
-            + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration
+            + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration */
       }
     }
   }
