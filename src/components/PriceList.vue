@@ -133,7 +133,7 @@
                     }
                 },
                 productsList: null,
-                imageUrl: ['../assets/images/', '.jpeg']
+                imageUrl: ['/src/assets/images/', '.jpeg']
             }
         },
         async mounted(){
