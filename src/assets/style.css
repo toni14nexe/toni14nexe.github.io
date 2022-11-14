@@ -85,7 +85,8 @@ body {
     color: white;
     transition: 0.3s;
     letter-spacing: 1px;
-    color: var(--pink)
+    color: var(--pink);
+    cursor: pointer;
 }
 
 .navbar{

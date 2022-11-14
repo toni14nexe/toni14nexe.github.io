@@ -118,6 +118,9 @@
         if(window.location.search == '?wrongLogIn'){
           this.currentComponent = 'LogIn'
         }
+        if(window.location.search == '?logIn'){
+          this.currentComponent = 'LogIn'
+        }
         if(window.location.search == '?sessionExpired'){
           this.currentComponent = 'SessionExpired'
         }
