@@ -6,14 +6,22 @@
                 <div class="row">
                     <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" class="col-sm">
                         <a :href="'#'+subType.type">
-                            <img :src="imageUrl[0]+subType.type+imageUrl[1]" class="product-img">
+                            <img v-if="subType.type == 'hot'" class="product-img" src="../assets/images/hot.jpeg">
+                            <img v-else-if="subType.type == 'juice'" class="product-img" src="../assets/images/juice.jpeg">
+                            <img v-else-if="subType.type == 'beer'" class="product-img" src="../assets/images/beer.jpeg">
+                            <img v-else-if="subType.type == 'wine'" class="product-img" src="../assets/images/wine.jpeg">
+                            <img v-else class="product-img" src="../assets/images/alcohol.jpeg">
                         </a>
                     </div>
                 </div>
                 <div class="row">
                     <div v-if="mainType.name == 'Food' && mainType.exist == true" v-for="subType in foodTypes" class="col-sm">
                         <a v-if="subType.exist" :href="'#'+subType.type">
-                            <img :src="imageUrl[0]+subType.type+imageUrl[1]" class="product-img">
+                            <img v-if="subType.type == 'soup'" class="product-img" src="../assets/images/soup.jpeg">
+                            <img v-else-if="subType.type == 'pizza'" class="product-img" src="../assets/images/pizza.jpeg">
+                            <img v-else-if="subType.type == 'grill'" class="product-img" src="../assets/images/grill.jpeg">
+                            <img v-else-if="subType.type == 'dish'" class="product-img" src="../assets/images/dish.jpeg">
+                            <img v-else class="product-img" src="../assets/images/dessert.jpeg">
                         </a>
                     </div>
                 </div>
