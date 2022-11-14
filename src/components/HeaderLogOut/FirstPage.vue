@@ -10,6 +10,9 @@
             <img class="hiding-xs" v-if="slideImage == 1" src="../../assets/images/wallpaper1xs.jpeg">
             <img class="hiding-xs" v-if="slideImage == 2" src="../../assets/images/wallpaper2xs.jpeg">
             <img class="hiding-xs" v-if="slideImage == 3" src="../../assets/images/wallpaper3xs.jpeg">
+            <img class="hiding-xxs" v-if="slideImage == 1" src="../../assets/images/wallpaper1xxs.jpeg">
+            <img class="hiding-xxs" v-if="slideImage == 2" src="../../assets/images/wallpaper2xxs.jpeg">
+            <img class="hiding-xxs" v-if="slideImage == 3" src="../../assets/images/wallpaper3xxs.jpeg">
         </div>
 
         <div class="overlay">
@@ -102,6 +105,12 @@
         animation:opac 2s}@keyframes opac{from{opacity:0} to{opacity:1}
     }
 
+    .hiding-xxs{
+        transition: ease-in 0.3s;
+        display: none;
+        animation:opac 2s}@keyframes opac{from{opacity:0} to{opacity:1}
+    }
+
     @media screen and (max-width: 1600px) {
         #image-text{
             font-size: 1.6rem;
@@ -118,6 +127,10 @@
         .hiding-xs{
             display: none;
         }
+
+        .hiding-xxs{
+            display: none;
+        }
     }
 
     @media screen and (max-width: 900px) {
@@ -130,6 +143,28 @@
         }
 
         .hiding-xs{
+            display: inherit;
+        }
+
+        .hiding-xxs{
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 415px) {
+        .hiding-large{
+            display: none;
+        }
+
+        .hiding-small{
+            display: none;
+        }
+
+        .hiding-xs{
+            display: none;
+        }
+
+        .hiding-xxs{
             display: inherit;
         }
     }

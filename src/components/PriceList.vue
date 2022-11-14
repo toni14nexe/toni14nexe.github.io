@@ -222,6 +222,13 @@
                             }
                             continue
                         }
+                        else if(this.productsList.data[i].type == 'dessert'){
+                            if(this.foodTypes.dessert.exist == false){
+                                this.foodTypes.dessert.exist = true
+                                continue
+                            }
+                            continue
+                        }
                     } 
                 }
             }
