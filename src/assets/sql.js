@@ -36,5 +36,13 @@ export default{
 
     ChangeProfileImage(){
         return SQLlink + 'changeProfilImage.php'
+    },
+
+    UpdateOrderCode(){
+        return SQLlink + 'updateOrderCode.php'
+    },
+
+    RemoveOrderCodes(){
+        return SQLlink + 'removeOrderCodes.php'
     }
 }
