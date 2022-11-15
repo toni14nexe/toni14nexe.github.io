@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :role="role" @firstPage="component = 'aaa'" @logout="logout()"/>
 
   </div>
 </template>
@@ -21,7 +21,8 @@
                 currentSubComponent: 'Account',
                 username: null,
                 fullname: null,
-                role: null
+                role: null,
+                component: null
             }
         },
         mounted(){
@@ -30,8 +31,7 @@
         methods:{
           verificateAndSetUser(){
             if(this.$route.query.wrongToken == 'true'){
-              VueCookies.remove('token')
-              window.location = pageMainLink.link()
+              this.logout()
             }
             this.username = this.$route.query.username
             this.fullname = this.$route.query.fullname
@@ -50,6 +50,11 @@
               window.location = pageMainLink.link()
             }
             window.history.pushState({}, document.title, "/");
+          },
+
+          logout(){
+            VueCookies.remove('token')
+            window.location = pageMainLink.link()
           }
         }
     }
