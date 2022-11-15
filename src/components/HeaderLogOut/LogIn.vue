@@ -154,6 +154,7 @@
     border: sold 10px white;
     border-radius: 5px;
     padding: 10px 30px 10px 30px;
+    max-width: 100%;
   }
 
   #qr-reader__dashboard_section_csr button:hover{
@@ -167,5 +168,22 @@
 
   #qr-reader div span a{
     color: white;
+  }
+
+  #qr-reader__camera_selection{
+    color: var(--dark-gray);
+    border-radius: 7px;
+    padding: 5px 10px 5px 10px;
+    margin: 10px 0 15px 0;
+    max-width: 100%;
+  }
+
+  #qr-shaded-region{
+    display: none;
+  }
+
+  #qr-reader__scan_region video{
+    border-radius: 15px;
+    max-width: 100%;
   }
 </style>
