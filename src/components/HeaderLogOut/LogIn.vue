@@ -16,22 +16,22 @@
                 <div id="qr-reader" style="width: 100%; height: 100%; display: inherit"></div>
               </div>
 
-              <div v-if="component == 'employee'" class="pb-5">
+              <div :key="component" v-if="component == 'employee'" class="pb-5">
                 <h2 class="fw-bold mb-2 text-uppercase">Employee Login</h2>
                 <div id="qr-reader" style="width: 100%; height: 100%;"></div>
                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
                 <div class="form-outline mb-4">
-                  <p class="error-message" v-if="emailMessage">{{emailMessage}}</p>
-                  <input v-model="email" type="email" id="typeEmailX" class="my-input form-control form-control-lg" placeholder="Email" />
-                  <label class="form-label" for="typeEmailX">Email</label>
+                  <p class="error-message" v-if="usernameMessage">{{usernameMessage}}</p>
+                  <input v-model="username" @change="usernameMessage = null" type="username" id="username" class="my-input form-control form-control-lg" placeholder="Username" />
+                  <label class="form-label" for="username">Username</label>
                 </div>
                 <div class="form-outline mb-4">
                   <p class="error-message" v-if="passwordMessage">{{passwordMessage}}</p>
-                  <input v-model="password" type="password" id="typePasswordX" class="my-input form-control form-control-lg" placeholder="Password" />
+                  <input v-model="password" @change="usernameMessage = null" type="password" id="typePasswordX" class="my-input form-control form-control-lg" placeholder="Password" />
                   <label class="form-label" for="typePasswordX">Password</label>
                 </div>
                 <p class="small mb-5 pb-lg-2"><a class="link" @click="switchToForgotPassword" href="#">Forgot password?</a></p>
-                <button @click="LogIn" class="my-btn btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                <button @click="LogIn()" class="my-btn btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               </div>
 
               <hr class="hr-login">
@@ -60,28 +60,28 @@
   export default {
     data(){
       return{
-        email: null,
-        emailMessage: null,
+        username: null,
+        usernameMessage: null,
         password: null,
         passwordMessage: null,
         token: null,
         tokenExpiration: null,
         component: 'user',
         componentSwitch: false
-
       }
     },
     mounted(){
       var html5QrcodeScanner = new Html5QrcodeScanner(
       "qr-reader", { fps: 10, qrbox: 250 });
       html5QrcodeScanner.render(onScanSuccess);
+      document.getElementById('qr-reader').style.border = 'none'
+
 
       if(window.location.search == '?wrongLogIn'){
-        this.emailMessage = 'Wrong email or password!'
+        this.usernameMessage = 'Wrong username or password!'
+        this.component = 'employee'
         window.history.pushState({}, document.title, "/")
       }
-
-      document.getElementById('qr-reader').style.border = 'none'
     },
     methods:{
       switchToForgotPassword(){
@@ -93,16 +93,13 @@
       },
 
       LogIn(){
-        this.emailMessage = checkInputs.checkEmail(this.email)
         this.passwordMessage = checkInputs.checkPasswordLength(this.password)
         const d = new Date();
         let time = d.getTime();
-        this.token = time + MD5(this.email).toString()
-        this.tokenExpiration = new Date().toLocaleString()
-
-        if(this.emailMessage == null && this.passwordMessage == null)
-          window.location = sql.LogIn() + "?password=" + MD5(this.password).toString() + "&email=" + this.email
-            + "&emailToken=" + MD5(this.email).toString() + "&token=" + this.token + "&tokenExpiration=" + this.tokenExpiration
+        this.token = time + MD5(this.username).toString()
+ 
+        if(this.usernameMessage == null && this.passwordMessage == null)
+          window.location = sql.LogIn() + "?password=" + MD5(this.password).toString() + "&username=" + this.username + "&token=" + this.token
       },
 
       refresh(){

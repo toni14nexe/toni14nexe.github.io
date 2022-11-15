@@ -244,7 +244,7 @@
         margin-left: 5%;
         margin-right: 5%;
         border-radius: 20px;
-        padding: 70px 25px 0px 25px;
+        padding: 70px 25px 15px 25px;
         margin-top: 50px;
     }
 

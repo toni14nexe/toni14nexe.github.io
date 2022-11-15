@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  import NavbarLogIn from './components/NavbarLogIn.vue'
   import Footer from './components/Footer.vue'
 
   export default {
@@ -20,7 +19,6 @@
       }
     },
     components:{
-      'log-in-navbar': NavbarLogIn,
       'footer-component': Footer
     }
   }

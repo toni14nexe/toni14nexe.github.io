@@ -2,6 +2,10 @@ import sqlLink from './sqlLink'
 var SQLlink = sqlLink.sqlLink();
 
 export default{
+    Main(){
+        return SQLlink
+    },
+    
     SignUp(){
         return SQLlink + 'addUser.php'
     },
@@ -18,8 +22,8 @@ export default{
         return SQLlink + 'logIn.php'
     },
 
-    Refresh(){
-        return SQLlink + 'refreshToken.php'
+    CheckUser(){
+        return SQLlink + 'checkUser.php'
     },
 
     Search(){
