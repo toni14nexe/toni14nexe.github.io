@@ -6,7 +6,7 @@
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
 
-    <price-list v-if="role == 'table'" :role="role"/>
+    <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role"/>
 
   </div>
 </template>

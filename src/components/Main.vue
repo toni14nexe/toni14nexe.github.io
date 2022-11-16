@@ -52,7 +52,6 @@
         }
       },
       mounted(){
-        console.log(pageMainLink.link() + 'main')
         if(VueCookies.get('token')){
           window.location = pageMainLink.link() + 'main'
         }

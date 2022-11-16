@@ -1,5 +1,13 @@
 <template>
     <div >
+
+<Transition class="position: relative;">
+    <div v-if="showToast" class="toast">
+        <p>hello</p>
+    </div>
+    
+</Transition>
+
         <div class="table-div">
             <div v-for="mainType in mainTypes" style="padding-bottom: 40px">
                 <p v-if="mainType.exist == true" class="table-main-title">{{mainType.name}}</p>
@@ -41,8 +49,8 @@
                             <td v-if="subType.type == product.type">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
                             <td style="text-align: right; max-width: fit-content;" v-if="subType.type == product.type && role== 'table'">
-                                <input type="number" v-model.number="value" class="num-input" />
-                                <button class="btn btn-outline-light">
+                                <input type="number" v-model="cart[product.id].model" class="num-input" />
+                                <button class="btn btn-outline-light" @click="addToCart(product.id)">
                                     <img src="../assets/images/addToCart.png">
                                 </button>
                             </td>
@@ -65,8 +73,8 @@
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
                             <td style="text-align: right; max-width: fit-content;" v-if="subType.type == product.type && role== 'table'">
-                                <input type="number" v-model.number="value" class="num-input" />
-                                <button class="btn btn-outline-light">
+                                <input type="number" v-model="cart[product.id].model" class="num-input" />
+                                <button class="btn btn-outline-light" @click="addToCart(product.id)">
                                     <img src="../assets/images/addToCart.png">
                                 </button>
                             </td>
@@ -153,7 +161,8 @@
                 },
                 productsList: null,
                 imageUrl: ['/src/assets/images/', '.jpeg'],
-                value: 1
+                cart: [],
+                showToast: false
             }
         },
         async mounted(){
@@ -162,7 +171,15 @@
         },
         methods:{
             getProductsList(){
+                var j = 0
                 for(var i=0; i<this.productsList.data.length; i++){
+                    this.cart[this.productsList.data[i].id] = {
+                        name : this.productsList.data[i].name,
+                        price: this.productsList.data[i].price,
+                        inStock: this.productsList.data[i].inStock,
+                        quantity: 0,
+                        model: 1
+                    }
                     if(this.productsList.data[i].mainType == 'drink'){
                         if(this.mainTypes.drinks.exist == false){
                             this.mainTypes.drinks.exist = true
@@ -247,6 +264,17 @@
 
             scrollTo(element){
                 document.getElementById(element).scrollIntoView({behavior: "smooth"});
+            },
+
+            addToCart(id){
+                if(this.cart[id].model <= this.cart[id].inStock){
+                    this.cart[id].quantity += this.cart[id].model
+                    this.cart[id].inStock -= this.cart[id].model
+                    this.cart[id].model = 1
+                }
+                this.showToast = true
+                console.log(this.cart[id])
+
             }
         }
     }
@@ -327,5 +355,47 @@
 
     .btn:hover{
         background-color: var(--pink);
+    }
+
+    /* Toast enter */
+    .v-enter-from{
+        opacity: 0;
+        transform: translateY(-60px);
+    }
+
+    .v-enter-to{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    .v-enter-active{
+        transition: all 0.3s ease;
+    }
+
+    /* Toast leave */
+    .v-leave-from{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    .v-leave-to{
+        opacity: 0;
+        transform: translateY(-60px);
+    }
+
+    .v-leave-active{
+        transition: all 0.3s ease;
+    }
+
+    .toast{
+        position: absolute;
+        top: 10%;
+        right: 5%;
+        background-color: aqua;
+        min-width: 30%;
+        min-height: 5%;        
+        text-align: center;
+        border-radius: 20px;
+        padding-top: 1%;
     }
 </style>
