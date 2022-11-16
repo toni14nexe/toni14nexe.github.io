@@ -16,11 +16,11 @@
             <div class="collapse navbar-collapse my-2 my-lg-0" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item mr-sm-2">
-                  <a class="a" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Price List</a>
+                  <span class="a" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Price List</span>
                 </li>
                 <div class="vl"></div>
                 <li class="nav-item mr-sm-2">
-                  <a class="a" @click="$emit('login')" :class="{active: currentComponent == 'LogIn'}" href="#">LogIn</a>
+                  <span class="a" @click="$emit('login')" :class="{active: currentComponent == 'LogIn'}" href="#">LogIn</span>
                 </li>
               </ul>
             </div>
@@ -29,8 +29,16 @@
           <form v-else class="form-inline">
             <div class="collapse navbar-collapse my-2 my-lg-0" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
+                <li v-if="role == 'table'" class="nav-item mr-sm-2">
+                  <span class="a" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Order</span>
+                </li>
+                <div class="vl"></div>
+                <li v-if="role == 'table'" class="nav-item mr-sm-2">
+                  <span class="a" @click="$emit('cart')" :class="{active: currentComponent == 'LogIn'}" href="#">Cart</span>
+                </li>
+                <div class="vl"></div>
                 <li class="nav-item mr-sm-2">
-                  <a class="a" @click="$emit('logout')" :class="{active: currentComponent == 'LogIn'}" href="#">LogOut</a>
+                  <span class="a" @click="$emit('logout')" href="#">LogOut</span>
                 </li>
               </ul>
             </div>
@@ -44,7 +52,8 @@
 
   export default {
     props: [
-      'role'
+      'role',
+      'currentComponent'
     ],
     data(){
       return{
@@ -60,6 +69,8 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  .a{
+    cursor: pointer;
+  }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div><!-- ------------ dovršiti to ------------ -->
-    <navbar :role="role" @firstPage="component = 'aaa'" @logout="logout()"/> <!-- ------------ dovršiti to ------------ -->
+    <navbar :role="role" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" 
+    @order="currentComponent = 'Order'" @logout="logout()"/> <!-- ------------ dovršiti to ------------ -->
        <!-- ------------ dovršiti to ------------ -->
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>

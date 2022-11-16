@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar @login="currentComponent = 'LogIn'" @priceList="currentComponent = 'PriceList'" @firstPage="currentComponent = 'FirstPage'"/>
+    <navbar @login="currentComponent = 'LogIn'" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" @firstPage="currentComponent = 'FirstPage'"/>
 
     <KeepAlive>
       <component :is="currentComponent" @forgotPassword="currentComponent = 'ForgotPassword'" @priceList="currentComponent = 'PriceList'"
