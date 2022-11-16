@@ -33,7 +33,7 @@
                 role: null,
                 token: null,
                 code: null,
-                component: null
+                component: null,
             }
         },
         mounted(){
