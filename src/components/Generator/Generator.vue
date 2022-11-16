@@ -15,6 +15,11 @@
                 countDown: 30
             }
         },
+        mounted(){
+            if(!this.code){
+                window.location = sql.UpdateOrderCode() + '?lastCode=null' + this.code + '&token=' + this.token
+            }
+        },
         methods:{
             countDownTimer () {
                 if (this.countDown == 0) {
