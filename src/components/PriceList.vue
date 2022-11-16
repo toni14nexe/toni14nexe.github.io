@@ -5,24 +5,20 @@
                 <p v-if="mainType.exist == true" class="table-main-title">{{mainType.name}}</p>
                 <div class="row">
                     <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" class="col-sm">
-                        <a :href="'#'+subType.type">
-                            <img v-if="subType.type == 'hot'" class="product-img" src="../assets/images/hot.jpeg">
-                            <img v-else-if="subType.type == 'juice'" class="product-img" src="../assets/images/juice.jpeg">
-                            <img v-else-if="subType.type == 'beer'" class="product-img" src="../assets/images/beer.jpeg">
-                            <img v-else-if="subType.type == 'wine'" class="product-img" src="../assets/images/wine.jpeg">
-                            <img v-else class="product-img" src="../assets/images/alcohol.jpeg">
-                        </a>
+                        <img @click="scrollTo(subType.type)" v-if="subType.type == 'hot'" class="product-img" src="../assets/images/hot.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else-if="subType.type == 'juice'" class="product-img" src="../assets/images/juice.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else-if="subType.type == 'beer'" class="product-img" src="../assets/images/beer.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else-if="subType.type == 'wine'" class="product-img" src="../assets/images/wine.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else class="product-img" src="../assets/images/alcohol.jpeg">
                     </div>
                 </div>
                 <div class="row">
                     <div v-if="mainType.name == 'Food' && mainType.exist == true" v-for="subType in foodTypes" class="col-sm">
-                        <a v-if="subType.exist" :href="'#'+subType.type">
-                            <img v-if="subType.type == 'soup'" class="product-img" src="../assets/images/soup.jpeg">
-                            <img v-else-if="subType.type == 'pizza'" class="product-img" src="../assets/images/pizza.jpeg">
-                            <img v-else-if="subType.type == 'grill'" class="product-img" src="../assets/images/grill.jpeg">
-                            <img v-else-if="subType.type == 'dish'" class="product-img" src="../assets/images/dish.jpeg">
-                            <img v-else class="product-img" src="../assets/images/dessert.jpeg">
-                        </a>
+                        <img @click="scrollTo(subType.type)" v-if="subType.type == 'soup'" class="product-img" src="../assets/images/soup.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else-if="subType.type == 'pizza'" class="product-img" src="../assets/images/pizza.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else-if="subType.type == 'grill'" class="product-img" src="../assets/images/grill.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else-if="subType.type == 'dish'" class="product-img" src="../assets/images/dish.jpeg">
+                        <img @click="scrollTo(subType.type)" v-else class="product-img" src="../assets/images/dessert.jpeg">
                     </div>
                 </div>
             </div>
@@ -30,7 +26,7 @@
 
         <div v-for="mainType in mainTypes" :id=mainType.type class="table-div">
             <p v-if="mainType.exist == true" class="table-main-title">{{mainType.name}}</p>
-            <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" :id="subType.type">
+            <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" :id="subType.type" :ref="subType.type">
                 <p class="table-title">{{subType.name}}</p>
                 <div class="d-flex justify-content-center">
                     <table v-if="subType.exist == true">
@@ -38,16 +34,17 @@
                             <th style="text-align: left; padding-left: 10px;">Name</th>
                             <th>Amount</th>
                             <th style="text-align: right; padding-right: 10px;">Price</th>
+                            <th style="max-width: fit-content;"></th>
                         </tr>
                         <tr v-for="product in productsList.data">
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
-                            <td v-if="subType.type == product.type && role== 'table'">
-                                <input type="number" v-model.number="value" />
-                            </td>
-                            <td v-if="subType.type == product.type && role== 'table'">
-                                <button class="btn btn-outline-light">Add to cart</button>
+                            <td style="text-align: right; max-width: fit-content;" v-if="subType.type == product.type && role== 'table'">
+                                <input type="number" v-model.number="value" class="num-input" />
+                                <button class="btn btn-outline-light">
+                                    <img src="../assets/images/addToCart.png">
+                                </button>
                             </td>
                         </tr>
                     </table>
@@ -61,16 +58,17 @@
                             <th style="text-align: left; padding-left: 10px;">Name</th>
                             <th style="text-align: left;">Ingredients</th>
                             <th style="text-align: right;  padding-right: 10px;">Price</th>
+                            <th style="max-width: fit-content;"></th>
                         </tr>
                         <tr v-for="product in productsList.data">
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
-                            <td v-if="subType.type == product.type && role== 'table'">
-                                <input type="number" v-model.number="value" />
-                            </td>
-                            <td v-if="subType.type == product.type && role== 'table'">
-                                <button class="btn btn-outline-light">Add to cart</button>
+                            <td style="text-align: right; max-width: fit-content;" v-if="subType.type == product.type && role== 'table'">
+                                <input type="number" v-model.number="value" class="num-input" />
+                                <button class="btn btn-outline-light">
+                                    <img src="../assets/images/addToCart.png">
+                                </button>
                             </td>
                         </tr>
                     </table>
@@ -154,7 +152,8 @@
                     }
                 },
                 productsList: null,
-                imageUrl: ['/src/assets/images/', '.jpeg']
+                imageUrl: ['/src/assets/images/', '.jpeg'],
+                value: 1
             }
         },
         async mounted(){
@@ -244,12 +243,16 @@
                         }
                     } 
                 }
+            },
+
+            scrollTo(element){
+                document.getElementById(element).scrollIntoView({behavior: "smooth"});
             }
         }
     }
 </script>
 
-<style>
+<style scoped>
     .table-div{
         align-items: center;
         background-color: var(--dark-gray);
@@ -306,5 +309,23 @@
         transition: 0.2s ease-in;
         height: 100%;
         border: solid 2px var(--dark-gray);
+        cursor: pointer;
+    }
+
+    .num-input{
+        max-width: 40px;
+        color: var(--dark-gray);
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .btn{
+        margin: 0 0 5px 10px;
+        padding: 5px 15px 5px 15px;
+        height: 35px;
+    }
+
+    .btn:hover{
+        background-color: var(--pink);
     }
 </style>
