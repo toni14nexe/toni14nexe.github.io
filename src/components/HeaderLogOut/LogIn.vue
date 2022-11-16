@@ -16,7 +16,7 @@
                 <div id="qr-reader" style="width: 100%; height: 100%; display: inherit"></div>
               </div>
 
-              <div :key="component" v-if="component == 'employee'" class="pb-5">
+              <div :key="component" v-if="component == 'employee'" class="pb-5" @keydown.enter="LogIn()">
                 <h2 class="fw-bold mb-2 text-uppercase">Employee Login</h2>
                 <div id="qr-reader" style="width: 100%; height: 100%;"></div>
                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
@@ -94,6 +94,7 @@
 
       LogIn(){
         this.passwordMessage = checkInputs.checkPasswordLength(this.password)
+        this.usernameMessage = checkInputs.checkUsernameLength(this.username)
         const d = new Date();
         let time = d.getTime();
         this.token = time + MD5(this.username).toString()

@@ -12,7 +12,7 @@
         props:['token', 'code'],
         data(){
             return{
-                countDown: 20
+                countDown: 60
             }
         },
         methods:{

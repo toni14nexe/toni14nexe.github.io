@@ -49,6 +49,12 @@ export default{
         else if(password.length < 8) return 'Too short password!'
     },
 
+    checkUsernameLength(username){
+        if(username == null) return 'Empty username!'
+        else if(username.length == 0) return 'Empty username!'
+        else if(username.length < 5) return 'Too short username!'
+    },
+
     checkPasswordConfirm(password, passwordConfirm){
         if(passwordConfirm == null) return 'Empty field!'
         else if(passwordConfirm.length == 0) return 'Empty field!'
