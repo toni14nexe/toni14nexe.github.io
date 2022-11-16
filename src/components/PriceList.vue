@@ -43,6 +43,12 @@
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
+                            <td v-if="subType.type == product.type && role== 'table'">
+                                <input type="number" v-model.number="value" />
+                            </td>
+                            <td v-if="subType.type == product.type && role== 'table'">
+                                <button class="btn btn-outline-light">Add to cart</button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -60,6 +66,12 @@
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
+                            <td v-if="subType.type == product.type && role== 'table'">
+                                <input type="number" v-model.number="value" />
+                            </td>
+                            <td v-if="subType.type == product.type && role== 'table'">
+                                <button class="btn btn-outline-light">Add to cart</button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -72,6 +84,7 @@
     import axios from 'axios'
 
     export default{
+        props: ['role'],
         data(){
             return{
                 mainTypes: {

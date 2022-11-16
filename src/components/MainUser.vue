@@ -1,8 +1,12 @@
 <template>
-  <div>
-    <navbar :role="role" @firstPage="component = 'aaa'" @logout="logout()"/>
+  <div><!-- ------------ dovršiti to ------------ -->
+    <navbar :role="role" @firstPage="component = 'aaa'" @logout="logout()"/> <!-- ------------ dovršiti to ------------ -->
+       <!-- ------------ dovršiti to ------------ -->
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
+    <generator v-if="role == 'generator'" :token="token" :code="code"/>
+
+    <price-list :role="role"/>
 
   </div>
 </template>
@@ -13,11 +17,13 @@
     import VueCookies from 'vue-cookies'
     import Navbar from './Navbar.vue'
     import Generator from './Generator/Generator.vue'
+    import PriceList from './PriceList.vue'
 
     export default {
       components:{
         Navbar,
-        Generator
+        Generator,
+        PriceList
       },
         data(){
             return{
@@ -52,7 +58,7 @@
             } else{
               window.location = sql.CheckUser() + '?token=' + VueCookies.get('token')
             }
-            if((this.role != 'admin' || this.role != 'chef' || this.role != 'waiter' || this.role != 'user' || this.role != 'generator') && !VueCookies.get('token')){
+            if((this.role != 'admin' || this.role != 'chef' || this.role != 'waiter' || this.role != 'table' || this.role != 'generator') && !VueCookies.get('token')){
               if(VueCookies.get('token')){
                 VueCookies.remove('token')
               }
