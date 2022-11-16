@@ -1,10 +1,9 @@
 <template>
   <div><!-- ------------ dovršiti to ------------ -->
     <navbar :role="role" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" 
-    @order="currentComponent = 'Order'" @logout="logout()"/> <!-- ------------ dovršiti to ------------ -->
+    @cart="currentComponent = 'Cart'" @logout="logout()" @firstPage="switchToFirstPage()"/>
        <!-- ------------ dovršiti to ------------ -->
 
-    <generator v-if="role == 'generator'" :token="token" :code="code"/>
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
 
     <price-list v-if="role == 'table'" :role="role"/>
@@ -34,10 +33,12 @@
                 token: null,
                 code: null,
                 component: null,
+                currentComponent: null
             }
         },
         mounted(){
             this.verificateAndSetUser()
+            this.switchToFirstPage()
         },
         methods:{
           verificateAndSetUser(){
@@ -76,6 +77,10 @@
               VueCookies.remove('token')
               window.location = pageMainLink.link()
             }
+          },
+
+          switchToFirstPage(){
+            if(this.role == 'table') this.currentComponent = 'PriceList'
           }
         }
     }

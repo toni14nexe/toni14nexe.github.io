@@ -3,7 +3,7 @@
         <a @click="$emit('firstPage')">
           <div class="title-div">
               <img class="favicon" src="../../public/favicon.ico" alt="">
-              <span class="navbar-brand title" href="#">The Purple Hat</span>
+              <span class="navbar-brand title">The Purple Hat</span>
           </div>
         </a>
 
@@ -32,11 +32,11 @@
                 <li v-if="role == 'table'" class="nav-item mr-sm-2">
                   <span class="a" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Order</span>
                 </li>
-                <div class="vl"></div>
+                <div v-if="role == 'table'" class="vl"></div>
                 <li v-if="role == 'table'" class="nav-item mr-sm-2">
                   <span class="a" @click="$emit('cart')" :class="{active: currentComponent == 'LogIn'}" href="#">Cart</span>
                 </li>
-                <div class="vl"></div>
+                <div v-if="role == 'table'" class="vl"></div>
                 <li class="nav-item mr-sm-2">
                   <span class="a" @click="$emit('logout')" href="#">LogOut</span>
                 </li>
