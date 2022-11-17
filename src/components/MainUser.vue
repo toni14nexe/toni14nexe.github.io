@@ -88,6 +88,10 @@
 
           switchToFirstPage(){
             if(this.role == 'table') this.currentComponent = 'PriceList'
+            if(this.currentComponent == 'PriceList') window.scrollTo({
+              top:0,
+              left: 0,
+              behavior: 'smooth'})
           }
         },
     }
