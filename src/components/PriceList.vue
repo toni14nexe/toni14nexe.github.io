@@ -39,7 +39,7 @@
                         <tr v-for="product in productsList.data">
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type">{{product.description}}</td>
-                            <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
+                            <td v-if="subType.type == product.type" style="text-align: right;">{{(product.price)}} €</td>
                             <td style="text-align: right; max-width: fit-content;" v-if="subType.type == product.type && role== 'table'">
                                 <input type="number" max="20" min="1" v-model="cart[product.id].model" class="num-input" />
                                 <button class="btn btn-outline-light" @click="addToCart(product.id)">
@@ -307,6 +307,6 @@
     }
 
     .btn:hover{
-        background-color: var(--pink);
+        background-color: var(--purple);
     }
 </style>
