@@ -5,9 +5,8 @@
        <!-- ------------ dovršiti to ------------ -->
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
-    {{aaa}}
     
-    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart"/>
+    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart" @firstPage="switchToFirstPage()"/>
     <keep-alive>
       <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role" @cartEmit="(cart) => emitCart = cart"/>
     </keep-alive>
@@ -87,13 +86,14 @@
           },
 
           switchToFirstPage(){
-            if(this.role == 'table') this.currentComponent = 'PriceList'
-            if(this.currentComponent == 'PriceList') window.scrollTo({
-              top:0,
-              left: 0,
-              behavior: 'smooth'})
+            if(this.currentComponent == 'PriceList') {
+              window.scrollTo({ top:0, left: 0, behavior: 'smooth'})
+            }
+            else if(this.role == 'table') {
+              this.currentComponent = 'PriceList'
+            }  
           }
-        },
+        }
     }
 </script>
 

@@ -278,7 +278,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .table-div{
         align-items: center;
         background-color: var(--dark-gray);
