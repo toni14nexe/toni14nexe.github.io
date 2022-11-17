@@ -7,6 +7,7 @@
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
 
     <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role"/>
+    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role"/>
 
   </div>
 </template>
@@ -18,12 +19,14 @@
     import Navbar from './Navbar.vue'
     import Generator from './Generator/Generator.vue'
     import PriceList from './PriceList.vue'
+    import Cart from './Table/Cart.vue'
 
     export default {
       components:{
         Navbar,
         Generator,
-        PriceList
+        PriceList,
+        Cart
       },
         data(){
             return{

@@ -1,13 +1,5 @@
 <template>
     <div >
-
-<Transition class="position: relative;">
-    <div v-if="showToast" class="toast">
-        <p>hello</p>
-    </div>
-    
-</Transition>
-
         <div class="table-div">
             <div v-for="mainType in mainTypes" style="padding-bottom: 40px">
                 <p v-if="mainType.exist == true" class="table-main-title">{{mainType.name}}</p>
@@ -84,12 +76,18 @@
             </div>
         </div>
     </div>
+
+    <toast :text="toastText" :trigger="toastTriggerCounter"/>
+
 </template>
 
 <script>
     import axios from 'axios'
-
+    import Toast from './Toast.vue'
     export default{
+        components: {
+            Toast
+        },
         props: ['role'],
         data(){
             return{
@@ -162,7 +160,8 @@
                 productsList: null,
                 imageUrl: ['/src/assets/images/', '.jpeg'],
                 cart: [],
-                showToast: false
+                toastText: 'Added to cart!',
+                toastTriggerCounter: 0
             }
         },
         async mounted(){
@@ -272,9 +271,7 @@
                     this.cart[id].inStock -= this.cart[id].model
                     this.cart[id].model = 1
                 }
-                this.showToast = true
-                console.log(this.cart[id])
-
+                this.toastTriggerCounter ++
             }
         }
     }
@@ -355,47 +352,5 @@
 
     .btn:hover{
         background-color: var(--pink);
-    }
-
-    /* Toast enter */
-    .v-enter-from{
-        opacity: 0;
-        transform: translateY(-60px);
-    }
-
-    .v-enter-to{
-        opacity: 1;
-        transform: translateY(0px);
-    }
-
-    .v-enter-active{
-        transition: all 0.3s ease;
-    }
-
-    /* Toast leave */
-    .v-leave-from{
-        opacity: 1;
-        transform: translateY(0px);
-    }
-
-    .v-leave-to{
-        opacity: 0;
-        transform: translateY(-60px);
-    }
-
-    .v-leave-active{
-        transition: all 0.3s ease;
-    }
-
-    .toast{
-        position: absolute;
-        top: 10%;
-        right: 5%;
-        background-color: aqua;
-        min-width: 30%;
-        min-height: 5%;        
-        text-align: center;
-        border-radius: 20px;
-        padding-top: 1%;
     }
 </style>

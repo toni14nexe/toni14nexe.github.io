@@ -34,7 +34,7 @@
                 </li>
                 <div v-if="role == 'table'" class="vl"></div>
                 <li v-if="role == 'table'" class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('cart')" :class="{active: currentComponent == 'LogIn'}" href="#">Cart</span>
+                  <span class="a" @click="$emit('cart')" :class="{active: currentComponent == 'Cart'}" href="#">Cart</span>
                 </li>
                 <div v-if="role == 'table'" class="vl"></div>
                 <li class="nav-item mr-sm-2">
