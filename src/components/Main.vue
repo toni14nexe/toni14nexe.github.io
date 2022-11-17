@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar @login="currentComponent = 'LogIn'" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" @firstPage="currentComponent = 'FirstPage'"/>
+    <navbar @login="currentComponent = 'LogIn'" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" @firstPage="firstPage()"/>
 
     <KeepAlive>
       <component :is="currentComponent" @forgotPassword="currentComponent = 'ForgotPassword'" @priceList="currentComponent = 'PriceList'"
@@ -103,6 +103,11 @@
       methods:{
         setEmptyURL(){
           window.history.pushState({}, document.title, "/");
+        },
+
+        firstPage(){
+          this.currentComponent = 'FirstPage'
+          window.scrollTo({ top:0, left: 0, behavior: 'smooth'})
         }
       }
     }

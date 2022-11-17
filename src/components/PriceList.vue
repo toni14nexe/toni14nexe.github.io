@@ -41,7 +41,7 @@
                             <td v-if="subType.type == product.type">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
                             <td style="text-align: right; max-width: fit-content;" v-if="subType.type == product.type && role== 'table'">
-                                <input type="number" v-model="cart[product.id].model" class="num-input" />
+                                <input type="number" max="20" min="1" v-model="cart[product.id].model" class="num-input" />
                                 <button class="btn btn-outline-light" @click="addToCart(product.id)">
                                     <img src="../assets/images/addToCart.png">
                                 </button>
@@ -279,51 +279,6 @@
 </script>
 
 <style>
-    .table-div{
-        align-items: center;
-        background-color: var(--dark-gray);
-        max-width: 90%;
-        margin-left: 5%;
-        margin-right: 5%;
-        border-radius: 20px;
-        padding: 70px 25px 15px 25px;
-        margin-top: 50px;
-    }
-
-    .table-main-title{
-        color: white;
-        font-size: 3rem;
-        text-align: center;
-        font-weight: 700;
-    }
-
-    .table-title{
-        color: white;
-        font-size: 2.1rem;
-        padding-top: 75px;
-        font-weight: 700;
-    }
-
-    table{
-        color: white;
-        text-align: center;
-        width: 100%;
-    }
-
-    th{
-        color: white;
-        text-align: center;
-        border-top: solid white 1px;
-        border-bottom: solid white 1px;
-        font-size: 1.3rem;
-    }
-
-    tr{
-        color: white;
-        text-align: center;
-        font-size: 1.3rem;
-    }
-
     .product-img{
         width: 100%;
         height: 98%;
@@ -339,7 +294,7 @@
     }
 
     .num-input{
-        max-width: 40px;
+        max-width: 50px;
         color: var(--dark-gray);
         text-align: center;
         border-radius: 5px;

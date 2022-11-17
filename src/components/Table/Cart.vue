@@ -3,6 +3,25 @@
             <h1 class="table-main-title" >Empty cart...</h1>
             <button class="btn" @click="$emit('firstPage')">Back to order</button>
     </div>
+
+    <div v-else class="d-flex justify-content-center flex-column table-div">
+        <h1 class="table-main-title" >Cart</h1>
+        <div >
+            {{item}}
+            <table>
+                <tr>
+                    <th style="text-align: left; padding-left: 10px;">Name</th>
+                    <th style="text-align: right; padding-left: 10px;">Quantity</th>
+                    <th style="text-align: right; padding-right: 10px;">Price</th>
+                </tr>
+                <tr v-for="item in list" style="padding-bottom: 40px">
+                    <td style="text-align: left">{{item.name}}</td>
+                    <td style="text-align: center">{{item.quantity}}</td>
+                    <td style="text-align: center">{{item.price*item.quantity}} €</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -33,7 +52,6 @@ export default {
                         inStock: this.cart[i].inStock
                     }
                     j++
-                    console.log(this.list)
                 }
             }
         }
