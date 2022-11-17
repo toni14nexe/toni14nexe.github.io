@@ -4,7 +4,10 @@
 
 <script>
 export default {
-
+    props:['cart'],
+    mounted(){
+        console.log(this.cart)
+    }
 }
 </script>
 

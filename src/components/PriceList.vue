@@ -271,6 +271,7 @@
                     this.cart[id].inStock -= this.cart[id].model
                     this.cart[id].model = 1
                 }
+                this.$emit('cartEmit', this.cart)
                 this.toastTriggerCounter ++
             }
         }

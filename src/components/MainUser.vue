@@ -5,9 +5,12 @@
        <!-- ------------ dovršiti to ------------ -->
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
-
-    <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role"/>
-    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role"/>
+    {{aaa}}
+    
+    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart"/>
+    <keep-alive>
+      <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role" @cartEmit="(cart) => emitCart = cart"/>
+    </keep-alive>
 
   </div>
 </template>
@@ -36,7 +39,8 @@
                 token: null,
                 code: null,
                 component: null,
-                currentComponent: null
+                currentComponent: null,
+                emitCart: null
             }
         },
         mounted(){
@@ -85,7 +89,7 @@
           switchToFirstPage(){
             if(this.role == 'table') this.currentComponent = 'PriceList'
           }
-        }
+        },
     }
 </script>
 
