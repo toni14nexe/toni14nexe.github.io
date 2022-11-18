@@ -11,19 +11,30 @@
             <table>
                 <tr>
                     <th style="text-align: left; padding-left: 10px;">Name</th>
-                    <th style="text-align: right">Quantity</th>
-                    <th style="text-align: right; padding-right: 10px;">Price</th>
-                    <th style="text-align: right; padding-right: 10px;"></th>
+                    <th style="text-align: center; padding-right: 10px;">Quantity</th>
+                    <th style="text-align: center; padding-right: 10px;">Price</th>
+                    <th style="text-align: center;">Sequence</th>
+                    <th></th>
                 </tr>
                 <tr v-for="item in list" style="padding-bottom: 40px">
                     <td style="text-align: left; padding-left: 10px;">{{item.name}}</td>
-                    <td style="text-align: right; padding-right: 10px;">{{item.quantity}}</td>
-                    <td style="text-align: right; padding-right: 10px;">{{(item.price*item.quantity).toFixed(2)}} €</td>
+                    <td style="text-align: center; padding-right: 10px;">{{item.quantity}}</td>
+                    <td style="text-align: center; padding-right: 10px;">{{(item.price*item.quantity).toFixed(2)}} €</td>
+                    <td>
+                        <select :id=item.name @change="changeSequence(item.name)">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </td>
                     <td style="text-align: right; padding-right: 10px;">
-                        <button class="btn btn-outline-light" @click="removeFromCart(item.name)" style="margin-top: 3px;">
+                        <button class="btn btn-outline-light" @click="removeFromCart(item.id)" style="margin-top: 3px;">
                             <img src="../../assets/images/removeFromCart.png">
                         </button>
-                    </td>        
+                    </td>
                 </tr>
             </table>
             <table style="margin-top: 50px;">
@@ -69,7 +80,8 @@ export default {
                         price: this.cart[i].price,
                         quantity: this.cart[i].quantity,
                         model: this.cart[i].model,
-                        inStock: this.cart[i].inStock
+                        inStock: this.cart[i].inStock,
+                        sequence: 1
                     }
                     j++
                     this.total += this.cart[i].quantity * this.cart[i].price
@@ -77,12 +89,26 @@ export default {
             }
         },
 
-        removeFromCart(name){
-            var id = this.list.indexOf(name)
-            var removed = this.list.splice(id, 1)
+        removeFromCart(databaseId){
+            var i = null
+            for(i=0; i<this.list.length; i++){
+                if(this.list[i].id == databaseId){
+                    break
+                }
+            }
+            var removed = this.list.splice(i, 1)
             this.total -= removed[0].quantity * removed[0].price
-            console.log(removed)
-            
+            this.cart[removed[0].id].quantity = 0
+        },
+
+        changeSequence(name){
+            var id = null
+            for(var i=0; i<this.list.length; i++){
+                if(this.list[i].name == name){
+                    this.list[i].sequence = parseInt(document.getElementById(this.list[i].name).value)
+                    break
+                }
+            }
         }
     }
 }

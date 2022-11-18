@@ -213,4 +213,5 @@ tr{
     color: white;
     text-align: center;
     font-size: 1.3rem;
+    border-bottom: solid 0.5px var(--gray);
 }
