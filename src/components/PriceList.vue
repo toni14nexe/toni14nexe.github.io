@@ -278,7 +278,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .product-img{
         width: 100%;
         height: 98%;

@@ -32,7 +32,7 @@
                     </td>
                     <td style="text-align: right; padding-right: 10px;">
                         <button class="btn btn-outline-light" @click="removeFromCart(item.id)" style="margin-top: 3px;">
-                            <img src="../../assets/images/removeFromCart.png">
+                            <img class="remove-btn" src="../../assets/images/removeFromCart.png">
                         </button>
                     </td>
                 </tr>
@@ -49,20 +49,31 @@
             </table>
         </div>
         <div style="height: 10px; background-color: white; z-index: 100;"/>
-        <div class="d-flex">
+        <div v-if="subComponent == 'main'" class="d-flex">
             <button class="btn" @click="$emit('firstPage')" style="width: 250px;">Back to order</button>
-            <button class="btn" style="width: 250px;">Proceed to payment</button>
+            <button class="btn" style="width: 250px;" @click="subComponent = 'question'">Place order</button>
+        </div>
+        <div v-if="subComponent == 'question'" style="text-align: center">
+            <h3 class="small-title">Place order?</h3>
+            <div class="d-flex">
+                <button class="btn" @click="subComponent = 'main'" style="width: 250px;">No</button>
+                <button class="btn" style="width: 250px;" @click="put()">Yes</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { pauseTracking } from '@vue/reactivity'
+import axios from 'axios'
+
 export default {
     props:['cart'],
     data(){
         return{
             list: [],
-            total: 0
+            total: 0,
+            subComponent: 'main'
         }
     },
     mounted(){
@@ -109,7 +120,12 @@ export default {
                     break
                 }
             }
-        }
+        },
+
+        async put(){
+            console.log('put')
+            await axios.post('https://toni-web.com/thepurplehat/table1', this.cart)
+        },
     }
 }
 </script>
@@ -121,10 +137,12 @@ export default {
     }
 
     .btn{
-        margin-top: 20px;
         border: solid 2px white;
         padding-bottom: 30px;
         border-radius: 30px;
+        margin: 0 0 5px 10px;
+        padding: 5px 15px 5px 15px;
+        height: 35px;
     }
 
     .btn:hover{
@@ -133,5 +151,9 @@ export default {
 
     tr:nth-child(even){
         background-color: var(--gray);
+    }
+
+    .remove-btn{
+        margin-top: -6px;
     }
 </style>

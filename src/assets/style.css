@@ -49,6 +49,13 @@ body {
     color: var(--pink);
 }
 
+.small-title{
+    font-size: 1.5rem;
+    color: white;
+    transition: ease-in 0.3s;
+    font-family: "Trueno";
+}
+
 .a{
     transition: ease-in 0.3s;
     color: white;
