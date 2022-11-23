@@ -57,23 +57,31 @@
             <h3 class="small-title">Place order?</h3>
             <div class="d-flex">
                 <button class="btn" @click="subComponent = 'main'" style="width: 250px;">No</button>
-                <button class="btn" style="width: 250px;" @click="put()">Yes</button>
+                <button class="btn" style="width: 250px;" @click="placeOrder(table)">Yes</button>
             </div>
         </div>
     </div>
+
+    <toast :text="toastText" :trigger="toastTriggerCounter"/>
+
 </template>
 
 <script>
-import { pauseTracking } from '@vue/reactivity'
+import Toast from '../Toast.vue'
+import sql from '../../assets/sql.js'
 import axios from 'axios'
 
 export default {
-    props:['cart'],
+    props:['cart', 'table'],
+    components: {Toast},
     data(){
         return{
             list: [],
             total: 0,
-            subComponent: 'main'
+            totalQuantity: null,
+            subComponent: 'main',
+            toastTriggerCounter: 0,
+            toastText: null
         }
     },
     mounted(){
@@ -85,17 +93,31 @@ export default {
             var j=0
             for(var i=0; i<this.cart.length; i++){
                 if(this.cart[i] && this.cart[i].quantity > 0){
-                    this.list[j] = {
-                        id: i,
-                        name: this.cart[i].name,
-                        price: this.cart[i].price,
-                        quantity: this.cart[i].quantity,
-                        model: this.cart[i].model,
-                        inStock: this.cart[i].inStock,
-                        sequence: 1
+                    if(this.cart[i].amount == '0.1l' && this.cart[i].type == 'wine'){
+                        this.list[j] = {
+                            id: i,
+                            name: this.cart[i].name,
+                            price: this.cart[i].price,
+                            quantity: this.cart[i].quantity,
+                            inStock: this.cart[i].inStock,
+                            sequence: 1,
+                            type: this.cart[i].type,
+                            amount: this.cart[i].amount
+                        }
+                    } else{
+                        this.list[j] = {
+                            id: i,
+                            name: this.cart[i].name,
+                            price: this.cart[i].price,
+                            quantity: this.cart[i].quantity,
+                            inStock: this.cart[i].inStock,
+                            sequence: 1,
+                            type: this.cart[i].type
+                        }
                     }
                     j++
                     this.total += this.cart[i].quantity * this.cart[i].price
+                    this.totalQuantity += this.cart[i].quantity
                 }
             }
         },
@@ -109,6 +131,7 @@ export default {
             }
             var removed = this.list.splice(i, 1)
             this.total -= removed[0].quantity * removed[0].price
+            this.totalQuantity -= removed[0].quantity
             this.cart[removed[0].id].quantity = 0
         },
 
@@ -122,10 +145,26 @@ export default {
             }
         },
 
-        async put(){
-            console.log('put')
-            await axios.post('https://toni-web.com/thepurplehat/table1', this.cart)
-        },
+        async placeOrder(table){
+            if(this.list.length > 50){
+                this.toastTriggerCounter++
+                this.toastText = 'ERR: Max number of items is 50!'
+            } else{
+                var order = '['
+                for(var i=0; i<this.list.length; i++){
+                    if(this.list[i].type == 'alcohol'){
+                        order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.03).toFixed(2) + '"}'
+                    } else if(this.list[i].type == 'wine' && this.list[i].amount == '0.1l'){
+                        order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.1).toFixed(2) + '"}'
+                    } else{
+                        order += '{"i":"' + this.list[i].id + '","q":"' + this.list[i].quantity + '"}'
+                    }
+                    if(i < this.list.length-1) order += ','
+                }
+                order += ']'
+            }
+            window.location = sql.PlaceOrder() + '?itemsNum=' + this.list.length + '&table=./tables/' + table + '&order=' + order
+        }
     }
 }
 </script>

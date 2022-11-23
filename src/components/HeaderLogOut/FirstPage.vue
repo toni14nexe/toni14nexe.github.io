@@ -19,7 +19,7 @@
         </div>
 
         <div class="overlay">
-            <h1 id="image-text">A good restaurant is like a vacation!</h1>
+            <h1 id="image-text">Let Your Food To Be Your Medicine!</h1>
             <a href="#"><i @click="slideImage = 1" v-if="slideImage != 1" class="fa-solid fa-circle-notch dot"></i></a>
             <a href="#"><i v-if="slideImage == 1" class="fa-solid fa-circle dot"></i></a>
             <a href="#"><i @click="slideImage = 2" v-if="slideImage != 2" class="fa-solid fa-circle-notch dot"></i></a>

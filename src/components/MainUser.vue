@@ -6,7 +6,7 @@
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
     
-    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart" @firstPage="switchToFirstPage()"/>
+    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart" @firstPage="switchToFirstPage()" :table="username"/>
     <keep-alive>
       <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role" @cartEmit="(cart) => emitCart = cart"/>
     </keep-alive>
@@ -45,6 +45,12 @@
         mounted(){
             this.verificateAndSetUser()
             this.switchToFirstPage()
+
+            if(window.location.search == '?placedOrder'){
+              console.log('?placedOrder')
+              //this.currentComponent = 'Error'
+              //this.setEmptyURL()
+            }
         },
         methods:{
           verificateAndSetUser(){

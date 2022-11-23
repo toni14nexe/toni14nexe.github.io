@@ -165,6 +165,11 @@
             }
         },
         async mounted(){
+            // from table primanje
+            var a = await axios.get('https://toni-web.com/thepurplehat/tables/table1')
+            var aa = a.data
+            var object = JSON.parse(aa)
+            console.log(object)
             this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
             this.getProductsList()
         },
@@ -172,14 +177,17 @@
             getProductsList(){
                 var j = 0
                 for(var i=0; i<this.productsList.data.length; i++){
-                    this.cart[this.productsList.data[i].id] = {
-                        name : this.productsList.data[i].name,
-                        price: this.productsList.data[i].price,
-                        inStock: this.productsList.data[i].inStock,
-                        quantity: 0,
-                        model: 1
-                    }
                     if(this.productsList.data[i].mainType == 'drink'){
+                        this.cart[this.productsList.data[i].id] = {
+                            name : this.productsList.data[i].name,
+                            price: this.productsList.data[i].price,
+                            inStock: this.productsList.data[i].inStock,
+                            quantity: 0,
+                            model: 1,
+                            type: this.productsList.data[i].type,
+                            amount: this.productsList.data[i].description
+                        }
+
                         if(this.mainTypes.drinks.exist == false){
                             this.mainTypes.drinks.exist = true
                         }
@@ -219,6 +227,15 @@
                             continue
                         }
                     } else{
+                        this.cart[this.productsList.data[i].id] = {
+                            name : this.productsList.data[i].name,
+                            price: this.productsList.data[i].price,
+                            inStock: this.productsList.data[i].inStock,
+                            quantity: 0,
+                            model: 1,
+                            type: this.productsList.data[i].type
+                        }
+
                         if(this.mainTypes.food.exist == false){
                             this.mainTypes.food.exist = true
                         }

@@ -26,23 +26,15 @@ export default{
         return SQLlink + 'checkUser.php'
     },
 
-    Search(){
-        return SQLlink + 'search.php'
-    },
-
-    ChangePassword(){
-        return SQLlink + 'changePassword.php'
-    },
-
-    ChangeProfileImage(){
-        return SQLlink + 'changeProfilImage.php'
-    },
-
     UpdateOrderCode(){
         return SQLlink + 'updateOrderCode.php'
     },
 
     RemoveOrderCodes(){
         return SQLlink + 'removeOrderCodes.php'
+    },
+
+    PlaceOrder(){
+        return SQLlink + 'placeOrder.php'
     }
 }
