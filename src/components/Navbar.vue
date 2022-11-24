@@ -3,7 +3,7 @@
         <a @click="$emit('firstPage')">
           <div class="title-div">
               <img class="favicon" src="../../public/favicon.ico" alt="">
-              <span class="navbar-brand title">The Purple Hat</span>
+              <h1 class="navbar-brand title">The Purple Hat</h1>
           </div>
         </a>
 
@@ -36,6 +36,10 @@
                 <li v-if="role == 'table'" class="nav-item mr-sm-2">
                   <span class="a" @click="$emit('cart')" :class="{active: currentComponent == 'Cart'}" href="#">Cart</span>
                 </li>
+                <div v-if="role == 'table' && bill" class="vl"></div>
+                <li v-if="role == 'table' && bill" class="nav-item mr-sm-2">
+                  <span class="a" @click="$emit('bill')" :class="{active: currentComponent == 'Bill'}" href="#">Bill</span>
+                </li>
                 <div v-if="role == 'table'" class="vl"></div>
                 <li class="nav-item mr-sm-2">
                   <span class="a" @click="$emit('logout')" href="#">LogOut</span>
@@ -53,7 +57,8 @@
   export default {
     props: [
       'role',
-      'currentComponent'
+      'currentComponent',
+      'bill'
     ],
     data(){
       return{

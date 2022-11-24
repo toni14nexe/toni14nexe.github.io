@@ -165,11 +165,6 @@
             }
         },
         async mounted(){
-            // from table primanje
-            var a = await axios.get('https://toni-web.com/thepurplehat/tables/table1')
-            var aa = a.data
-            var object = JSON.parse(aa)
-            console.log(object)
             this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
             this.getProductsList()
         },

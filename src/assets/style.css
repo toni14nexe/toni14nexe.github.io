@@ -41,6 +41,7 @@ body {
     font-size: 1.8rem;
     color: var(--pink);
     transition: ease-in 0.3s;
+    font-weight: 700;
 }
 
 .title:hover{
@@ -59,6 +60,7 @@ body {
 .a{
     transition: ease-in 0.3s;
     color: white;
+    font-weight: 850;
 }
 
 .a:hover{

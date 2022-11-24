@@ -7,7 +7,6 @@
     <div v-else class="d-flex justify-content-center flex-column table-div">
         <h1 class="table-main-title" >Cart</h1>
         <div style="width: 100%">
-            {{item}}
             <table>
                 <tr>
                     <th style="text-align: left; padding-left: 10px;">Name</th>
@@ -69,10 +68,9 @@
 <script>
 import Toast from '../Toast.vue'
 import sql from '../../assets/sql.js'
-import axios from 'axios'
 
 export default {
-    props:['cart', 'table'],
+    props:['cart', 'table', 'APICart'],
     components: {Toast},
     data(){
         return{
@@ -80,14 +78,15 @@ export default {
             total: 0,
             totalQuantity: null,
             subComponent: 'main',
-            toastTriggerCounter: 0,
-            toastText: null
+            toastText: null,
+            toastTriggerCounter: 0
         }
     },
     mounted(){
         if(this.cart)
             this.generateList()
-    },
+        console.log(this.APICart)
+        },
     methods:{
         generateList(){
             var j=0
@@ -162,8 +161,8 @@ export default {
                     if(i < this.list.length-1) order += ','
                 }
                 order += ']'
-            }
             window.location = sql.PlaceOrder() + '?itemsNum=' + this.list.length + '&table=./tables/' + table + '&order=' + order
+            }
         }
     }
 }

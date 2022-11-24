@@ -1,12 +1,14 @@
 <template>
   <div><!-- ------------ dovršiti to ------------ -->
     <navbar :role="role" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" 
-    @cart="currentComponent = 'Cart'" @logout="logout()" @firstPage="switchToFirstPage()"/>
+    @cart="currentComponent = 'Cart'" @logout="logout()" @firstPage="switchToFirstPage()" :bill="bill"
+    @bill="currentComponent = 'Bill'" />
        <!-- ------------ dovršiti to ------------ -->
 
     <generator v-if="role == 'generator'" :token="token" :code="code"/>
     
-    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart" @firstPage="switchToFirstPage()" :table="username"/>
+    <cart v-if="role == 'table' && currentComponent == 'Cart'" :role="role" :cart="emitCart" @firstPage="switchToFirstPage()" :table="username" :APICart="APICart" />
+    <bill v-if="role == 'table' && currentComponent == 'Bill'" @firstPage="switchToFirstPage()" :table="username" :APICart="APICart" />
     <keep-alive>
       <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role" @cartEmit="(cart) => emitCart = cart"/>
     </keep-alive>
@@ -21,14 +23,17 @@
     import Navbar from './Navbar.vue'
     import Generator from './Generator/Generator.vue'
     import PriceList from './PriceList.vue'
+    import axios from 'axios'
     import Cart from './Table/Cart.vue'
+    import Bill from './Table/Bill.vue'
 
     export default {
       components:{
         Navbar,
         Generator,
         PriceList,
-        Cart
+        Cart,
+        Bill
       },
         data(){
             return{
@@ -39,18 +44,15 @@
                 code: null,
                 component: null,
                 currentComponent: null,
-                emitCart: null
+                emitCart: null,
+                APICart: null,
+                bill: false
             }
         },
         mounted(){
             this.verificateAndSetUser()
             this.switchToFirstPage()
-
-            if(window.location.search == '?placedOrder'){
-              console.log('?placedOrder')
-              //this.currentComponent = 'Error'
-              //this.setEmptyURL()
-            }
+            this.getTableAPI()
         },
         methods:{
           verificateAndSetUser(){
@@ -98,6 +100,15 @@
             else if(this.role == 'table') {
               this.currentComponent = 'PriceList'
             }  
+          },
+
+          async getTableAPI(){
+            this.APICart = await axios.get('https://toni-web.com/thepurplehat/tables/table1')
+            this.APICart = this.APICart.data
+            if(this.APICart.length > 0){
+              this.APICart = JSON.parse(this.APICart)
+              this.bill = true
+            }
           }
         }
     }

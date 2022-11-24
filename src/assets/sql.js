@@ -36,5 +36,9 @@ export default{
 
     PlaceOrder(){
         return SQLlink + 'placeOrder.php'
+    },
+
+    FinishOrder(){
+        return SQLlink + 'finishOrder.php'
     }
 }
