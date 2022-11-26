@@ -123,6 +123,7 @@
     @media screen and (max-width: 1600px) {
         #image-text{
             font-size: 1.6rem;
+            font-weight: 600;
         }
 
         .hiding-large{

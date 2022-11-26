@@ -18,7 +18,7 @@
             </section>
         </div>
 
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); font-weight: 850;">
             © 2022 Copyright: <a class="link" href="" >Toni Kolarić - The Purple Hat</a>
         </div>
 

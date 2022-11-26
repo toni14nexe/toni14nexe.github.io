@@ -12,7 +12,7 @@
                 </tr>
                 <tr v-for="item in APICart" style="padding-bottom: 40px">
                     <td style="text-align: left; padding-left: 10px;">{{item.name}}</td>
-                    <td style="text-align: center; padding-right: 10px;">1-6</td>
+                    <td style="text-align: center; padding-right: 10px;">{{item.sequence}}</td>
                     <td style="text-align: center; padding-right: 10px;">{{item.quantity}}</td>
                     <td>{{(item.price*item.quantity).toFixed(2)}} €</td>
                 </tr>
@@ -20,11 +20,11 @@
             <table style="margin-top: 50px;">
                 <tr style="background-color: var(--gray); margin-top: 50px;;">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.9rem;">Total:</td>
+                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.9rem; font-weight: 600;">Total:</td>
                 </tr>
                 <tr style="background-color: var(--gray);">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.8rem;">{{total.toFixed(2)}} €</td>
+                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.8rem; font-weight: 600;">{{total.toFixed(2)}} €</td>
                 </tr>
             </table>
         </div>
@@ -34,7 +34,7 @@
             <button class="btn" style="width: 250px;" @click="subComponent = 'question'">Pay order</button>
         </div>
         <div v-if="subComponent == 'question'" style="text-align: center">
-            <h3 class="small-title">Call waiter to pay order?</h3>
+            <h3 class="small-title" style="font-weight: 600">Call waiter to pay order?</h3>
             <div class="d-flex">
                 <button class="btn" @click="subComponent = 'main'" style="width: 250px;">No</button>
                 <button class="btn" style="width: 250px;" @click="finishOrder()">Yes</button>
@@ -63,6 +63,7 @@
         },
         mounted(){
             this.getTotal()
+            console.log(this.APICart)
         },
         methods:{
             getTotal(){
@@ -74,33 +75,26 @@
             },
 
             finishOrder(){
-                if(this.APICart.length > 3){
-                    this.toastText = 'ERR: Max number of items is 50!'
-                    this.toastTriggerCounter++
-                } else{
-                    var order = '['
-                    for(var i=0; i<this.APICart.length; i++){
-                        if(this.APICart[i].type == 'alcohol'){
-                            order += '{"i":"' + this.APICart[i].id + '","q":"' + (this.APICart[i].quantity * 0.03).toFixed(2) + '"}'
-                        } else if(this.APICart[i].type == 'wine' && this.APICart[i].amount == '0.1l'){
-                            order += '{"i":"' + this.APICart[i].id + '","q":"' + (this.APICart[i].quantity * 0.1).toFixed(2) + '"}'
-                        } else{
-                            order += '{"i":"' + this.APICart[i].id + '","q":"' + this.APICart[i].quantity + '"}'
-                        }
-                        if(i < this.APICart.length-1) order += ','
+                this.subComponent = null
+                var order = '['
+                for(var i=0; i<this.APICart.length; i++){
+                    if(this.APICart[i].type == 'alcohol'){
+                        order += '{"i":"' + this.APICart[i].id + '","q":"' + (this.APICart[i].quantity * 0.03).toFixed(2) + '"}'
+                    } else if(this.APICart[i].type == 'wine' && this.APICart[i].amount == '0.1l'){
+                        order += '{"i":"' + this.APICart[i].id + '","q":"' + (this.APICart[i].quantity * 0.1).toFixed(2) + '"}'
+                    } else{
+                        order += '{"i":"' + this.APICart[i].id + '","q":"' + this.APICart[i].quantity + '"}'
                     }
-                    order += ']'
-
-                    console.log(order)
-                    console.log(sql.FinishOrder() + '?itemsNum=' + this.APICart.length + '&table=./tables/' + this.table + '&order=' + order)
-                    //window.location = sql.finishOrder() + '?itemsNum=' + this.APICart.length + '&table=./tables/' + table + '&order=' + order
+                    if(i < this.APICart.length-1) order += ','
                 }
+                order += ']'
+                window.location = sql.FinishOrder() + '?itemsNum=' + this.APICart.length + '&table=' + this.table + '&order=' + order
             }
         }
     }
 </script>
 
-<style>
+<style scoped>
     .table-div{
         margin-top: 20px;
         padding-top: 20px;
@@ -111,7 +105,7 @@
         padding-bottom: 30px;
         border-radius: 30px;
         margin: 0 0 5px 10px;
-        padding: 5px 15px 5px 15px;
+        padding: 5px 15px 30px 15px;
         height: 35px;
     }
 

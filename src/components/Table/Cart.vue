@@ -39,11 +39,11 @@
             <table style="margin-top: 50px;">
                 <tr style="background-color: var(--gray); margin-top: 50px;;">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.9rem;">Total:</td>
+                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.9rem; font-weight: 600;">Total:</td>
                 </tr>
                 <tr style="background-color: var(--gray);">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.8rem;">{{total.toFixed(2)}} €</td>
+                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.8rem; font-weight: 600;">{{total.toFixed(2)}} €</td>
                 </tr>
             </table>
         </div>
@@ -53,7 +53,7 @@
             <button class="btn" style="width: 250px;" @click="subComponent = 'question'">Place order</button>
         </div>
         <div v-if="subComponent == 'question'" style="text-align: center">
-            <h3 class="small-title">Place order?</h3>
+            <h3 class="small-title" style="font-weight: 600">Place order?</h3>
             <div class="d-flex">
                 <button class="btn" @click="subComponent = 'main'" style="width: 250px;">No</button>
                 <button class="btn" style="width: 250px;" @click="placeOrder(table)">Yes</button>
@@ -85,7 +85,6 @@ export default {
     mounted(){
         if(this.cart)
             this.generateList()
-        console.log(this.APICart)
         },
     methods:{
         generateList(){
@@ -145,23 +144,60 @@ export default {
         },
 
         async placeOrder(table){
-            if(this.list.length > 50){
-                this.toastTriggerCounter++
-                this.toastText = 'ERR: Max number of items is 50!'
-            } else{
-                var order = '['
-                for(var i=0; i<this.list.length; i++){
-                    if(this.list[i].type == 'alcohol'){
-                        order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.03).toFixed(2) + '"}'
-                    } else if(this.list[i].type == 'wine' && this.list[i].amount == '0.1l'){
-                        order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.1).toFixed(2) + '"}'
-                    } else{
-                        order += '{"i":"' + this.list[i].id + '","q":"' + this.list[i].quantity + '"}'
+            this.subComponent = null
+            var found = false
+            if(this.APICart.length > 0){
+                var APICartLength = this.APICart.length
+                for(var j=0; j<this.list.length; j++){
+                    found = false
+                    for(var i=0; i<this.APICart.length; i++){
+                        this.APICart[i].quantity = parseInt(this.APICart[i].quantity)
+                        if(this.APICart[i].id == this.list[j].id){
+                            this.APICart[i].quantity += this.list[j].quantity
+                            found = true
+                        }
                     }
-                    if(i < this.list.length-1) order += ','
+                    if(found == false){
+                        this.APICart[APICartLength] = {
+                            id: this.list[j].id,
+                            name: this.list[j].name,
+                            price: this.list[j].price,
+                            quantity: this.list[j].quantity,
+                            sequence: this.list[j].sequence
+                        }
+                        found = false
+                        APICartLength++
+                    }
                 }
-                order += ']'
-            window.location = sql.PlaceOrder() + '?itemsNum=' + this.list.length + '&table=./tables/' + table + '&order=' + order
+            }
+            if(this.APICart.length > 50){
+                this.toastTriggerCounter++
+                this.toastText = 'ERR: Large bill! First pay please!'
+            } else{
+                if(this.APICart.length > 0){
+                    var order = '['
+                    for(var i=0; i<this.APICart.length; i++){
+                        //to send quantity for alcohol like 0.03 & for wine like 0.1
+                        /*if(this.list[i].type == 'alcohol'){
+                            order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.03).toFixed(2) + '","s":"' + this.list[i].sequence + '"}'
+                        } else if(this.list[i].type == 'wine' && this.list[i].amount == '0.1l'){
+                            order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.1).toFixed(2) + '","s":"' + this.list[i].sequence + '"}'
+                        } else{*/
+                        order += '{"i":"' + this.APICart[i].id + '","q":"' + this.APICart[i].quantity + '","s":"' + this.APICart[i].sequence + '"}'
+                        //}
+                        if(i < this.APICart.length-1) order += ','
+                    }
+                    order += ']'
+                    window.location = sql.PlaceOrder() + '?itemsNum=' + this.APICart.length + '&table=./tables/' + table + '&order=' + order
+                }else{
+                    var order = '['
+                    for(var i=0; i<this.list.length; i++){
+                        order += '{"i":"' + this.list[i].id + '","q":"' + this.list[i].quantity + '","s":"' + this.list[i].sequence + '"}'
+                        if(i < this.list.length-1) order += ','
+                    }
+                    order += ']'
+                    window.location = sql.PlaceOrder() + '?itemsNum=' + this.list.length + '&table=./tables/' + table + '&order=' + order
+                }
             }
         }
     }
@@ -179,7 +215,7 @@ export default {
         padding-bottom: 30px;
         border-radius: 30px;
         margin: 0 0 5px 10px;
-        padding: 5px 15px 5px 15px;
+        padding: 5px 15px 30px 15px;
         height: 35px;
     }
 

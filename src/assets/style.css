@@ -216,6 +216,7 @@ th{
     border-top: solid white 1px;
     border-bottom: solid white 1px;
     font-size: 1.3rem;
+    font-weight: 700;
 }
 
 tr{
@@ -223,4 +224,5 @@ tr{
     text-align: center;
     font-size: 1.3rem;
     border-bottom: solid 0.5px var(--gray);
+    font-weight: 500;
 }
