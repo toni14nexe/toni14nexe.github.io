@@ -226,3 +226,10 @@ tr{
     border-bottom: solid 0.5px var(--gray);
     font-weight: 500;
 }
+
+.order-div{
+    border: var(--purple) solid 5px;
+    border-radius: 15px;
+    color: white;
+    margin: 2% 0 2% 0;
+}

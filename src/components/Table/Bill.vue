@@ -63,7 +63,6 @@
         },
         mounted(){
             this.getTotal()
-            console.log(this.APICart)
         },
         methods:{
             getTotal(){

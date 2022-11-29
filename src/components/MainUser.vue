@@ -13,6 +13,8 @@
       <price-list v-if="role == 'table' && currentComponent == 'PriceList'" :role="role" @cartEmit="(cart) => emitCart = cart"/>
     </keep-alive>
 
+    <waiter-orders v-if="role == 'waiter'" :fullname="fullname" :tableNumber="tableNumber"/>
+
   </div>
 </template>
 
@@ -26,6 +28,7 @@
     import axios from 'axios'
     import Cart from './Table/Cart.vue'
     import Bill from './Table/Bill.vue'
+    import WaiterOrders from './Waiter/Orders.vue'
 
     export default {
       components:{
@@ -33,7 +36,8 @@
         Generator,
         PriceList,
         Cart,
-        Bill
+        Bill,
+        WaiterOrders
       },
         data(){
             return{
@@ -46,13 +50,17 @@
                 currentComponent: null,
                 emitCart: null,
                 APICart: null,
-                bill: false
+                bill: false,
+                tableNumber: null
             }
         },
         mounted(){
-            this.verificateAndSetUser()
-            this.switchToFirstPage()
+          this.verificateAndSetUser()
+          
+          if(this.role == 'table'){
             this.getTableAPI()
+            this.switchToFirstPage()
+          }
         },
         methods:{
           verificateAndSetUser(){
@@ -80,6 +88,10 @@
               }
               window.location = pageMainLink.link()
             }
+            if(this.role == 'admin' || this.role == 'chef' || this.role == 'waiter'){
+              this.getTableNumber()
+              VueCookies.set('token' , this.$route.query.token, '4h')
+            }
             window.history.pushState({}, document.title, "/");
           },
 
@@ -103,12 +115,19 @@
           },
 
           async getTableAPI(){
-            this.APICart = await axios.get('https://toni-web.com/thepurplehat/tables/table1')
+            this.APICart = await axios.get('https://toni-web.com/thepurplehat/tables/' + this.username)
             this.APICart = this.APICart.data
             if(this.APICart.length > 0){
               this.APICart = JSON.parse(this.APICart)
               this.bill = true
             }
+          },
+
+          async getTableNumber(){
+            await axios.get('https://toni-web.com/thepurplehat/tables/tableNumber')
+            .then((result) => {
+              this.tableNumber = result.data
+            })
           }
         }
     }

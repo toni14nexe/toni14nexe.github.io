@@ -144,6 +144,8 @@ export default {
         },
 
         async placeOrder(table){
+            console.log(this.APICart)
+
             this.subComponent = null
             var found = false
             if(this.APICart.length > 0){

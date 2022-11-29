@@ -40,5 +40,21 @@ export default{
 
     FinishOrder(){
         return SQLlink + 'finishOrder.php'
+    },
+
+    WaiterFinish(){
+        return SQLlink + 'waiterFinish.php'
+    },
+
+    WaiterCancel(){
+        return SQLlink + 'waiterCancel.php'
+    },
+
+    ChefFinish(){
+        return SQLlink + 'chefFinish.php'
+    },
+
+    ChefCancel(){
+        return SQLlink + 'chefCancel.php'
     }
 }
