@@ -4,13 +4,13 @@
         <div v-if="orders.length < 1" style="display: none">{{getOrders()}}</div>
         <div class="table-div mt-3 pb-5">
             <div class="d-flex flex-row justify-content-end">
-                <h3 class="notification">Waiter: {{fullname}}</h3>
+                <h3 class="notification">Chef: {{fullname}}</h3>
             </div>
             <div class="d-flex flex-row justify-content-center">
                 <h1 class="table-main-title" >Orders: {{totalOrders}}</h1>
             </div>
             <div v-for="order in orders" >
-                <div v-if="(!order[0].waiter && order[0] && order[0].empty == false)" class="order-div pt-2 pl-3 pr-3 pb-3">
+                <div v-if="(!order[0].chef && order[0] && order[0].empty == false)" class="order-div pt-2 pl-3 pr-3 pb-3">
                     <div class="d-flex flex-row justify-content-between">
                         <h4>{{order[0].tableName}}</h4>
                         <h4>{{order[0].time}}</h4>
@@ -22,9 +22,9 @@
                             <th style="text-align: center; padding-right: 10px;">Quantity</th>
                         </tr>
                         <tr v-for="item in order">
-                            <td v-if="item.type == 'drink'" style="text-align: left; padding-left: 10px;">{{item.name}}</td>
-                            <td v-if="item.type == 'drink'" style="text-align: center; padding-right: 10px;">{{item.sequence}}</td>
-                            <td v-if="item.type == 'drink'" style="text-align: center; padding-right: 10px;">{{item.quantity}}</td>
+                            <td v-if="item.type == 'food'" style="text-align: left; padding-left: 10px;">{{item.name}}</td>
+                            <td v-if="item.type == 'food'" style="text-align: center; padding-right: 10px;">{{item.sequence}}</td>
+                            <td v-if="item.type == 'food'" style="text-align: center; padding-right: 10px;">{{item.quantity}}</td>
                         </tr>
                     </table>
                     <div v-if="component == 'main'" class="d-flex flex-row justify-content-center mt-3">
@@ -71,6 +71,7 @@
             }
         },
         methods:{
+            aaa(){console.log('aaa')},
             async getOrders(){
                 let j=0
                 for(let i=1; i<=this.tableNumber; i++){
@@ -78,7 +79,7 @@
                     .then((result) => {
                         if(result.data.length>0){
                             this.orders[j] = result.data
-                            var char = result.data.search('"waiter\":\"true\"')
+                            var char = result.data.search('"chef\":\"true\"')
                             if(char < 0){
                                 this.totalOrders++
                             }
@@ -94,7 +95,7 @@
                 }
                 for(let i=0; i<this.orders.length; i++){
                     for(let j=0; j<this.orders[i].length; j++){
-                        if(this.orders[i][j].type == 'drink'){
+                        if(this.orders[i][j].type == 'food'){
                             this.orders[i][0].empty = false
                             break
                         }
@@ -108,11 +109,11 @@
             },
 
             finishOrder(fileTableName){
-                window.location = sql.WaiterFinish() + '?table=' + fileTableName
+                window.location = sql.ChefFinish() + '?table=' + fileTableName
             },
 
             cancelOrder(fileTableName){
-                window.location = sql.WaiterCancel() + '?table=' + fileTableName
+                window.location = sql.ChefCancel() + '?table=' + fileTableName
             }
         }
     }

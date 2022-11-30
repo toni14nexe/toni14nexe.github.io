@@ -14,6 +14,7 @@
     </keep-alive>
 
     <waiter-orders v-if="role == 'waiter'" :fullname="fullname" :tableNumber="tableNumber"/>
+    <chef-orders v-if="role == 'chef'" :fullname="fullname" :tableNumber="tableNumber"/>
 
   </div>
 </template>
@@ -29,6 +30,7 @@
     import Cart from './Table/Cart.vue'
     import Bill from './Table/Bill.vue'
     import WaiterOrders from './Waiter/Orders.vue'
+    import ChefOrders from './Chef/Orders.vue'
 
     export default {
       components:{
@@ -37,7 +39,8 @@
         PriceList,
         Cart,
         Bill,
-        WaiterOrders
+        WaiterOrders,
+        ChefOrders
       },
         data(){
             return{

@@ -52,7 +52,7 @@ export default{
     checkUsernameLength(username){
         if(username == null) return 'Empty username!'
         else if(username.length == 0) return 'Empty username!'
-        else if(username.length < 5) return 'Too short username!'
+        else if(username.length < 4) return 'Too short username!'
     },
 
     checkPasswordConfirm(password, passwordConfirm){
