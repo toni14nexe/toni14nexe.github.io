@@ -49,8 +49,9 @@
         </div>
         <div style="height: 10px; background-color: white; z-index: 100;"/>
         <div v-if="subComponent == 'main'" class="d-flex">
-            <button class="btn" @click="$emit('firstPage')" style="width: 250px;">Back to order</button>
-            <button class="btn" style="width: 250px;" @click="subComponent = 'question'">Place order</button>
+            <button v-if="allowShopping" class="btn" @click="$emit('firstPage')" style="width: 250px;">Back to order</button>
+            <button v-if="allowShopping" class="btn" style="width: 250px;" @click="subComponent = 'question'">Place order</button>
+            <h3 v-if="!allowShopping" style="color: white">Can't order while waiting payment!</h3>
         </div>
         <div v-if="subComponent == 'question'" style="text-align: center">
             <h3 class="small-title" style="font-weight: 600">Place order?</h3>
@@ -79,12 +80,21 @@ export default {
             totalQuantity: null,
             subComponent: 'main',
             toastText: null,
-            toastTriggerCounter: 0
+            toastTriggerCounter: 0,
+            allowShopping: true
         }
     },
     mounted(){
         if(this.cart)
             this.generateList()
+        if(this.APICart.length == 0){
+            this.allowShopping = true
+        }
+        else{
+            if(this.APICart[0].payment == 'true'){
+                this.allowShopping = false
+            }
+        }
         },
     methods:{
         generateList(){
@@ -144,8 +154,6 @@ export default {
         },
 
         async placeOrder(table){
-            console.log(this.APICart)
-
             this.subComponent = null
             var found = false
             if(this.APICart.length > 0){

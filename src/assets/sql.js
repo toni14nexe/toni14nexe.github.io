@@ -56,5 +56,9 @@ export default{
 
     ChefCancel(){
         return SQLlink + 'chefCancel.php'
+    },
+
+    PaidOrder(){
+        return SQLlink + 'paidOrder.php'
     }
 }

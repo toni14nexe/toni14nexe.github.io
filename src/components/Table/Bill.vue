@@ -30,8 +30,9 @@
         </div>
         <div style="height: 10px; background-color: white; z-index: 100;"/>
         <div v-if="subComponent == 'main'" class="d-flex">
-            <button class="btn" @click="$emit('firstPage')" style="width: 250px;">Back to order</button>
-            <button class="btn" style="width: 250px;" @click="subComponent = 'question'">Pay order</button>
+            <button v-if="!APICart[0].payment" class="btn" @click="$emit('firstPage')" style="width: 250px;">Back to order</button>
+            <button v-if="!APICart[0].payment" class="btn" style="width: 250px;" @click="subComponent = 'question'">Pay order</button>
+            <h3 v-if="APICart[0].payment" style="color: white">Waiting payment!</h3>
         </div>
         <div v-if="subComponent == 'question'" style="text-align: center">
             <h3 class="small-title" style="font-weight: 600">Call waiter to pay order?</h3>
