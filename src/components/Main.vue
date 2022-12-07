@@ -25,6 +25,7 @@
     import EmailSent from './Admin/EmailSent.vue'
     import NewPassword from './HeaderLogOut/NewPassword.vue'
     import SessionExpired from './HeaderLogOut/SessionExpired.vue'
+    import WrongCode from './HeaderLogOut/WrongCode.vue'
     import Navbar from './Navbar.vue'
     import VueCookies from 'vue-cookies'
     import pageMainLink from '../assets/pageMainLink'
@@ -44,7 +45,8 @@
         EmailSent,
         NewPassword,
         SessionExpired,
-        Navbar
+        Navbar,
+        WrongCode
       },
       data(){
         return{
@@ -52,10 +54,14 @@
         }
       },
       mounted(){
+        if(VueCookies.get('token') && window.location.search == '?wrongCode=true'){
+          VueCookies.remove('token')
+          this.setEmptyURL()
+          this.currentComponent = 'WrongCode'
+        }
         if(VueCookies.get('token')){
           window.location = pageMainLink.link() + 'main'
         }
-
         if(window.location.search.substring(0,10) == '?JSONfile='){
           this.setEmptyURL()
         }

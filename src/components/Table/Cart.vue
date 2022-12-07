@@ -54,10 +54,12 @@
             <h3 v-if="!allowShopping" style="color: white">Can't order while waiting payment!</h3>
         </div>
         <div v-if="subComponent == 'question'" style="text-align: center">
-            <h3 class="small-title" style="font-weight: 600">Place order?</h3>
-            <div class="d-flex">
-                <button class="btn" @click="subComponent = 'main'" style="width: 250px;">No</button>
-                <button class="btn" style="width: 250px;" @click="placeOrder(table)">Yes</button>
+            <h3 class="small-title" style="font-weight: 600">Enter order code:</h3>
+            <div class="d-flex justify-content-center">
+                <input type="number" v-model="genNum" class="mb-3 text-center" style="width: 250px;" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <button class="btn" style="width: 100px;" @click="placeOrder(table)">OK</button>
             </div>
         </div>
     </div>
@@ -81,7 +83,8 @@ export default {
             subComponent: 'main',
             toastText: null,
             toastTriggerCounter: 0,
-            allowShopping: true
+            allowShopping: true,
+            genNum: null
         }
     },
     mounted(){
@@ -154,59 +157,63 @@ export default {
         },
 
         async placeOrder(table){
-            this.subComponent = null
-            var found = false
-            if(this.APICart.length > 0){
-                var APICartLength = this.APICart.length
-                for(var j=0; j<this.list.length; j++){
-                    found = false
-                    for(var i=0; i<this.APICart.length; i++){
-                        this.APICart[i].quantity = parseInt(this.APICart[i].quantity)
-                        if(this.APICart[i].id == this.list[j].id){
-                            this.APICart[i].quantity += this.list[j].quantity
-                            found = true
-                        }
-                    }
-                    if(found == false){
-                        this.APICart[APICartLength] = {
-                            id: this.list[j].id,
-                            name: this.list[j].name,
-                            price: this.list[j].price,
-                            quantity: this.list[j].quantity,
-                            sequence: this.list[j].sequence
-                        }
+            if(this.genNum < 1000 || this.genNum > 9999){
+                this.toastText = 'Wrong order code!'
+                this.toastTriggerCounter++
+            }else{
+                var found = false
+                if(this.APICart.length > 0){
+                    var APICartLength = this.APICart.length
+                    for(var j=0; j<this.list.length; j++){
                         found = false
-                        APICartLength++
+                        for(var i=0; i<this.APICart.length; i++){
+                            this.APICart[i].quantity = parseInt(this.APICart[i].quantity)
+                            if(this.APICart[i].id == this.list[j].id){
+                                this.APICart[i].quantity += this.list[j].quantity
+                                found = true
+                            }
+                        }
+                        if(found == false){
+                            this.APICart[APICartLength] = {
+                                id: this.list[j].id,
+                                name: this.list[j].name,
+                                price: this.list[j].price,
+                                quantity: this.list[j].quantity,
+                                sequence: this.list[j].sequence
+                            }
+                            found = false
+                            APICartLength++
+                        }
                     }
                 }
-            }
-            if(this.APICart.length > 50){
-                this.toastTriggerCounter++
-                this.toastText = 'ERR: Large bill! First pay please!'
-            } else{
-                if(this.APICart.length > 0){
-                    var order = '['
-                    for(var i=0; i<this.APICart.length; i++){
-                        //to send quantity for alcohol like 0.03 & for wine like 0.1
-                        /*if(this.list[i].type == 'alcohol'){
-                            order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.03).toFixed(2) + '","s":"' + this.list[i].sequence + '"}'
-                        } else if(this.list[i].type == 'wine' && this.list[i].amount == '0.1l'){
-                            order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.1).toFixed(2) + '","s":"' + this.list[i].sequence + '"}'
-                        } else{*/
-                        order += '{"i":"' + this.APICart[i].id + '","q":"' + this.APICart[i].quantity + '","s":"' + this.APICart[i].sequence + '"}'
-                        //}
-                        if(i < this.APICart.length-1) order += ','
+                if(this.APICart.length > 50){
+                    this.toastTriggerCounter++
+                    this.toastText = 'ERR: Large bill! First pay please!'
+                } else{
+                    if(this.APICart.length > 0){
+                        var order = '['
+                        for(var i=0; i<this.APICart.length; i++){
+                            //to send quantity for alcohol like 0.03 & for wine like 0.1
+                            /*if(this.list[i].type == 'alcohol'){
+                                order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.03).toFixed(2) + '","s":"' + this.list[i].sequence + '"}'
+                            } else if(this.list[i].type == 'wine' && this.list[i].amount == '0.1l'){
+                                order += '{"i":"' + this.list[i].id + '","q":"' + (this.list[i].quantity * 0.1).toFixed(2) + '","s":"' + this.list[i].sequence + '"}'
+                            } else{*/
+                            order += '{"i":"' + this.APICart[i].id + '","q":"' + this.APICart[i].quantity + '","s":"' + this.APICart[i].sequence + '"}'
+                            //}
+                            if(i < this.APICart.length-1) order += ','
+                        }
+                        order += ']'
+                        window.location = sql.PlaceOrder() + '?itemsNum=' + this.APICart.length + '&table=./tables/' + table + '&order=' + order + '&genNum=' + this.genNum
+                    }else{
+                        var order = '['
+                        for(var i=0; i<this.list.length; i++){
+                            order += '{"i":"' + this.list[i].id + '","q":"' + this.list[i].quantity + '","s":"' + this.list[i].sequence + '"}'
+                            if(i < this.list.length-1) order += ','
+                        }
+                        order += ']'
+                        window.location = sql.PlaceOrder() + '?itemsNum=' + this.list.length + '&table=./tables/' + table + '&order=' + order + '&genNum=' + this.genNum
                     }
-                    order += ']'
-                    window.location = sql.PlaceOrder() + '?itemsNum=' + this.APICart.length + '&table=./tables/' + table + '&order=' + order
-                }else{
-                    var order = '['
-                    for(var i=0; i<this.list.length; i++){
-                        order += '{"i":"' + this.list[i].id + '","q":"' + this.list[i].quantity + '","s":"' + this.list[i].sequence + '"}'
-                        if(i < this.list.length-1) order += ','
-                    }
-                    order += ']'
-                    window.location = sql.PlaceOrder() + '?itemsNum=' + this.list.length + '&table=./tables/' + table + '&order=' + order
                 }
             }
         }
@@ -239,5 +246,16 @@ export default {
 
     .remove-btn{
         margin-top: -6px;
+    }
+
+    input{
+        color: var(--gray);
+        height: 2.2rem;
+        border-radius: 50px;
+        max-width: 150px;
+    }
+
+    input:focus{
+        border-color: var(--gray);
     }
 </style>

@@ -13,7 +13,7 @@
                             <h1 class="table-main-title" >Waiting to pay: {{totalOrdersForPayment}}</h1>
                         </div>
                         <div v-for="order in orders" >
-                            <div v-if="(order[0].chef && order[0].waiter)" class="order-div pt-2 pl-3 pr-3 pb-3">
+                            <div v-if="(order[0].payment)" class="order-div pt-2 pl-3 pr-3 pb-3">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h4>{{order[0].tableName}}</h4>
                                     <h4>{{order[0].time}}</h4>
@@ -139,7 +139,7 @@
                             this.orders[j][0].timestamp = parseInt(this.orders[j][0].time) * 1000
                             this.orders[j][0].time = functions.getDateFromTimestamp(this.orders[j][0].timestamp)
                             this.orders[j][0].empty = true
-                            if((this.orders[j][0].waiter && this.orders[j][0].chef)){
+                            if((this.orders[j][0].payment)){
                                 this.totalOrdersForPayment++
                             }
                             j++

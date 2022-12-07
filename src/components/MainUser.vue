@@ -59,7 +59,7 @@
         },
         mounted(){
           this.verificateAndSetUser()
-          
+        
           if(this.role == 'table'){
             this.getTableAPI()
             this.switchToFirstPage()

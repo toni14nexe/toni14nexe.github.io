@@ -1,7 +1,7 @@
 <template>
     <div >
         <div class="table-div">
-            <div v-for="mainType in mainTypes" style="padding-bottom: 40px">
+            <div v-bind:key="mainType.id" v-for="mainType in mainTypes" style="padding-bottom: 40px">
                 <p v-if="mainType.exist == true" class="table-main-title">{{mainType.name}}</p>
                 <div class="row">
                     <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" class="col-sm">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div v-for="mainType in mainTypes" :id=mainType.type class="table-div">
+        <div  v-bind:key="mainType.id" v-for="mainType in mainTypes" :id=mainType.type class="table-div">
             <p v-if="mainType.exist == true" class="table-main-title">{{mainType.name}}</p>
             <div v-if="mainType.name == 'Drinks' && mainType.exist == true" v-for="subType in drinksTypes" :id="subType.type" :ref="subType.type">
                 <p class="table-title">{{subType.name}}</p>
@@ -36,7 +36,7 @@
                             <th style="text-align: right; padding-right: 10px;">Price</th>
                             <th style="max-width: fit-content;"></th>
                         </tr>
-                        <tr v-for="product in productsList.data">
+                        <tr  v-bind:key="product.id" v-for="product in productsList.data">
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{(product.price)}} €</td>
@@ -60,7 +60,7 @@
                             <th style="text-align: right;  padding-right: 10px;">Price</th>
                             <th style="max-width: fit-content;"></th>
                         </tr>
-                        <tr v-for="product in productsList.data">
+                        <tr  v-bind:key="product.id" v-for="product in productsList.data">
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.name}}</td>
                             <td v-if="subType.type == product.type" style="text-align: left;">{{product.description}}</td>
                             <td v-if="subType.type == product.type" style="text-align: right;">{{product.price}} €</td>
