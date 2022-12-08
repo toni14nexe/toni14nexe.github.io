@@ -16,6 +16,8 @@
     <waiter-orders v-if="role == 'waiter'" :fullname="fullname" :tableNumber="tableNumber"/>
     <chef-orders v-if="role == 'chef'" :fullname="fullname" :tableNumber="tableNumber"/>
 
+    <main-admin v-if="role == 'admin'" :fullname="fullname" :tableNumber="tableNumber"/>
+
   </div>
 </template>
 
@@ -31,6 +33,7 @@
     import Bill from './Table/Bill.vue'
     import WaiterOrders from './Waiter/Orders.vue'
     import ChefOrders from './Chef/Orders.vue'
+    import MainAdmin from './Admin/MainAdmin.vue'
 
     export default {
       components:{
@@ -40,7 +43,8 @@
         Cart,
         Bill,
         WaiterOrders,
-        ChefOrders
+        ChefOrders,
+        MainAdmin
       },
         data(){
             return{
