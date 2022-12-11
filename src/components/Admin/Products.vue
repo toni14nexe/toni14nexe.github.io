@@ -169,15 +169,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
     <div v-if="component == 'delete'" class="mt-5">
         <div class="d-flex flex-row justify-content-center mb-2 text-center">
             <select v-model="drinkOrFoodDelete">

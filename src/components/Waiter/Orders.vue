@@ -146,19 +146,6 @@
                         }
                     })
                 }
-                for(let i=0; i<this.orders.length; i++){
-                    for(let j=0; j<this.orders[i].length; j++){
-                        if(this.orders[i][j].type == 'drink'){
-                            this.orders[i][0].empty = false
-                        }
-                    }
-                }
-                
-                for(let i=0; i<this.orders.length; i++){
-                    if(this.orders[i][0].empty == true){
-                        this.totalOrders--
-                    }
-                }
             },
 
             finishOrder(fileTableName){
