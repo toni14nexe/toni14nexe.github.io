@@ -3,7 +3,7 @@
         <h1 class="title title-admin" style="font-size: 2.5rem;">Orders</h1>
     </div >
     <div class="d-flex flex-row justify-content-center mt-4">
-        <h3 class="small-title">Active/Finished orders: </h3>
+        <h3 class="small-title pink-color">Active/Finished orders: </h3>
     </div>
     <div class="d-flex flex-row justify-content-center mt-1">
         <select v-model="ordersSelect" @change="ordersSelected" class="ml-4">
@@ -12,7 +12,7 @@
         </select>
     </div>
     <div class="d-flex flex-row justify-content-center mt-5">
-        <h3 class="small-title">Date filter: </h3>
+        <h3 class="small-title pink-color">Date filter: </h3>
     </div>
     <div class="d-flex flex-row justify-content-center mt-1">
         <input type="date" v-model="filter[0]">
@@ -23,7 +23,7 @@
         <button class="btn my-btn" @click="filterItems">Filter</button>
     </div>
     <div class="d-flex flex-row justify-content-center mt-5">
-        <h3 class="small-title">Sort by:</h3>
+        <h3 class="small-title pink-color">Sort by:</h3>
     </div>
     <div class="d-flex flex-row justify-content-center mt-1">
         <select v-model="sort" @change="sortItems" class="ml-4">
