@@ -5,8 +5,8 @@
     <div class="d-flex flex-row justify-content-center mt-2">
         <h3 class="a mx-3" @click="component = 'list'" :class="{active: component == 'list'}">List</h3>
         <div class="vl"></div>
-        <h3 class="a mx-3" @click="component = 'add'" :class="{active: component == 'add'}">Add</h3>
-        <div class="vl"></div>
+        <h3 v-if="tableNumber < 10" class="a mx-3" @click="component = 'add'" :class="{active: component == 'add'}">Add</h3>
+        <div v-if="tableNumber < 10" class="vl"></div>
         <h3 class="a mx-3" @click="component = 'remove'" :class="{active: component == 'remove'}">Remove</h3>
     </div>
     <div v-if="component == 'add'" class="mt-5">
@@ -35,13 +35,26 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         data(){
             return{
-                component: null
+                component: null,
+                tableNumber: null
             }
         },
+        mounted(){
+            this.getTableNumber()
+        },
         methods:{
+            async getTableNumber(){
+                await axios.get('https://toni-web.com/thepurplehat/tables/tableNumber')
+                .then((result) => {
+                    this.tableNumber = result.data
+                })
+            },
+
             closeTable(){
                 this.component = null
                 console.log('close')

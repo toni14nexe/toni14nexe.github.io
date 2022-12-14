@@ -11,11 +11,13 @@
                 </div>
                 <div v-if="waiterComponent == 'list'">
                     <table class="mt-4">
-                        <tr>
-                            <td>Name Surname</td>
-                            <td>
-                                <button class="delete my-btn mx-2" @click="deleteWaiter">Delete</button>
-                            </td>
+                        <tr v-bind:key="employee.id" v-for="employee in employees.data">
+                            <div v-if="employee.role == 'waiter'" class="d-flex flex-row justify-content-between mx-4">
+                                <td>{{employee.fullname}}</td>
+                                <td>
+                                    <button class="delete my-btn mx-2" @click="deleteEmployee(employee.id)">Delete</button>
+                                </td>
+                            </div>
                         </tr>
                     </table>
                 </div>
@@ -31,6 +33,14 @@
                     <div class="d-flex flex-row mt-2 ml-1 justify-content-center">
                         <h3 class="small-title">Username: </h3>
                         <input class="ml-4" v-model="waiterUsername">
+                    </div>
+                    <div class="d-flex flex-row mt-2 ml-1 justify-content-center">
+                        <h3 class="small-title">Password: </h3>
+                        <input type="password" style="margin-left: 31px" v-model="waiterPassword[0]">
+                    </div>
+                    <div class="d-flex flex-row mt-2 ml-1 justify-content-center">
+                        <h3 class="small-title">Repeat: </h3>
+                        <input type="password" style="margin-left: 60px" v-model="waiterPassword[1]">
                     </div>
                     <div class="d-flex flex-row mt-4 ml-1 justify-content-center">
                         <button class="delete my-btn mx-2" @click="waiterComponent = 'list'">Close</button>
@@ -50,11 +60,13 @@
                 </div>
                 <div v-if="chefComponent == 'list'">
                     <table class="mt-4">
-                        <tr>
-                            <td>Name Surname</td>
-                            <td>
-                                <button class="delete my-btn mx-2" @click="deleteChef">Delete</button>
-                            </td>
+                        <tr v-bind:key="employee.id" v-for="employee in employees.data">
+                            <div v-if="employee.role == 'chef'" class="d-flex flex-row justify-content-between mx-4">
+                                <td>{{employee.fullname}}</td>
+                                <td>
+                                    <button class="delete my-btn mx-2" @click="deleteEmployee(employee.id)">Delete</button>
+                                </td>
+                            </div>
                         </tr>
                     </table>
                 </div>
@@ -71,6 +83,14 @@
                         <h3 class="small-title">Username: </h3>
                         <input class="ml-4" v-model="chefUsername">
                     </div>
+                    <div class="d-flex flex-row mt-2 ml-1 justify-content-center">
+                        <h3 class="small-title">Password: </h3>
+                        <input type="password" style="margin-left: 31px" v-model="chefPassword[0]">
+                    </div>
+                    <div class="d-flex flex-row mt-2 ml-1 justify-content-center">
+                        <h3 class="small-title">Repeat: </h3>
+                        <input type="password" style="margin-left: 60px" v-model="chefPassword[1]">
+                    </div>
                     <div class="d-flex flex-row mt-4 ml-1 justify-content-center">
                         <button class="delete my-btn mx-2" @click="chefComponent = 'list'">Close</button>
                         <button
@@ -84,10 +104,21 @@
             </div>
         </div>
     </div>
+
+    <toast :text="toastText" :trigger="toastTriggerCounter"/>
+
 </template>
 
 <script>
+    import sql from '../../assets/sql'
+    import Toast from '../Toast.vue'
+    import MD5 from "crypto-js/md5";
+    import axios from 'axios'
+
     export default {
+        components: {
+            Toast
+        },
         data(){
             return{
                 waiterComponent: 'list',
@@ -95,26 +126,52 @@
                 waiterFirstname: '',
                 waiterLastname: '',
                 waiterUsername: '',
+                waiterPassword: [],
                 chefFirstname: '',
                 chefLastname: '',
-                chefUsername: ''
+                chefUsername: '',
+                chefPassword: [],
+                employees: [],
+                toastText: '',
+                toastTriggerCounter: 0
             }
         },
+        mounted(){
+            this.getEmployees()
+        },
         methods:{
+            async getEmployees(){
+                this.employees = await axios.get('https://toni-web.com/thepurplehat/employees')
+            },
+
             addWaiter(){
-                console.log('add waiter')
+                if(this.waiterPassword[0].length < 5){
+                    this.toastText = 'Too short password!'
+                    this.toastTriggerCounter++
+                }else if(this.waiterPassword[0] != this.waiterPassword[1]){
+                    this.toastText = 'You entered different passwords!'
+                    this.toastTriggerCounter++
+                }else{
+                    window.location = sql.AddEmployee() + '?role=waiter&password=' + MD5(this.waiterPassword[0])
+                        + '&fname=' + this.waiterFirstname + '&lname=' + this.waiterLastname + '&username=' + this.waiterUsername
+                }
             },
 
             addChef(){
-                console.log('add chef')
+                if(this.chefPassword[0].length < 5){
+                    this.toastText = 'Too short password!'
+                    this.toastTriggerCounter++
+                }else if(this.chefPassword[0] != this.chefPassword[1]){
+                    this.toastText = 'You entered different passwords!'
+                    this.toastTriggerCounter++
+                }else{
+                    window.location = sql.AddEmployee() + '?role=chef&password=' + MD5(this.chefPassword[0])
+                        + '&fname=' + this.chefFirstname + '&lname=' + this.chefLastname + '&username=' + this.chefUsername
+                }
             },
 
-            deleteWaiter(){
-                console.log('delete waiter')
-            },
-
-            deleteChef(){
-                console.log('delete chef')
+            deleteEmployee(id){
+                window.location = sql.DeleteEmployee() + '?id=' + id
             }
         }
     }
@@ -149,5 +206,9 @@
 
     button:disabled{
         color: var(--dark-gray);
+    }
+
+    tr{
+        border-top: 1px solid var(--gray);
     }
 </style>

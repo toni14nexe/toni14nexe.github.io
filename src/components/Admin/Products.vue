@@ -224,7 +224,7 @@
             </select>
         </div>
         <div v-if="drinkOrFoodDelete == 'food'" class="d-flex flex-row justify-content-center">
-            <button :disabled="(!foodTypeDelete.length || !foodDelete.length)" class="my-btn" @click="deleteItem">Delete</button>
+            <button :disabled="(!foodTypeDelete.length || !foodDelete.length)" class="my-btn" @click="deleteItem">Remove</button>
         </div>
     </div>
 </template>

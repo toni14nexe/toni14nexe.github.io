@@ -18,19 +18,39 @@
             >Add
         </button>
     </div>
+
+    <toast :text="toastText" :trigger="toastTriggerCounter"/>
+
 </template>
 
 <script>
+    import Toast from '../Toast.vue'
+    import sql from "../../assets/sql.js"
+    import MD5 from "crypto-js/md5";
+
     export default {
+        components: {
+            Toast
+        },
         data(){
             return{
                 newPassword: '',
-                repeatPasssword: ''
+                repeatPasssword: '',
+                toastText: '',
+                toastTriggerCounter: 0
             }
         },
         methods:{
             changePassword(){
-                console.log('change password')
+                if(this.newPassword.length < 5){
+                    this.toastText = 'Too short password!'
+                    this.toastTriggerCounter++
+                }else if(this.newPassword != this.repeatPasssword){
+                    this.toastText = 'You entered different passwords!'
+                    this.toastTriggerCounter++
+                }else{
+                    window.location = sql.ResetAdminPassword() + "?password=" + MD5(this.newPassword)
+                }
             }
         }
     }

@@ -60,5 +60,17 @@ export default{
 
     PaidOrder(){
         return SQLlink + 'paidOrder.php'
+    },
+
+    ResetAdminPassword(){
+        return SQLlink + 'resetAdminPassword.php'
+    },
+
+    AddEmployee(){
+        return SQLlink + 'addEmployee.php'
+    },
+
+    DeleteEmployee(){
+        return SQLlink + 'deleteEmployee.php'
     }
 }

@@ -12,34 +12,13 @@
         </select>
     </div>
     <div class="d-flex flex-row justify-content-center mt-5">
-        <h3 class="small-title pink-color">Date filter: </h3>
-    </div>
-    <div class="d-flex flex-row justify-content-center mt-1">
-        <input type="date" v-model="filter[0]">
-        <h5 class="small-title"> : </h5>
-        <input type="date" v-model="filter[1]">
-    </div >
-    <div class="d-flex flex-row justify-content-center mt-3">
-        <button class="btn my-btn" @click="filterItems">Filter</button>
-    </div>
-    <div class="d-flex flex-row justify-content-center mt-5">
-        <h3 class="small-title pink-color">Sort by:</h3>
-    </div>
-    <div class="d-flex flex-row justify-content-center mt-1">
-        <select v-model="sort" @change="sortItems" class="ml-4">
-            <option value="time" class="text-center">Time</option>
-            <option value="tableName" class="text-center">Table name</option>
-            <option value="total" class="text-center">Total Price</option>
-        </select>
-    </div>
-    <div class="d-flex flex-row justify-content-center mt-5">
         <table>
             <tr v-if="orders.length">
                 <td class="pink-color">Table</td>
                 <td class="pink-color">Time</td>
                 <td class="pink-color">Total</td>
             </tr>
-            <tr v-bind:key="order" v-for="order in orders">
+            <tr v-bind:key="orderCounter" v-for="order in orders">
                 <td>{{order[0].tableName}}</td>
                 <td>{{order[0].time}}</td>
                 <td>{{order[0].total}} €</td>
@@ -57,9 +36,7 @@
             return{
                 orders: [],
                 ordersSelect: null,
-                tableNumber: null,
-                filter: ['',''],
-                sort: 'time'
+                tableNumber: null
             }
         },
         mounted(){
@@ -123,20 +100,13 @@
                                 this.orders[i][0].total = total
                                 this.orders[i][0].tableName = 'T' + this.orders[i][0].tableName.substring(1, 5) + '-' 
                                     + this.orders[i][0].tableName.substring(5, this.orders[i][0].tableName.length)
+                                    this.orders[i][0].timestamp = this.orders[i][0].time*1000
                                 this.orders[i][0].time = functions.getDateFromTimestamp(parseInt(this.orders[i][0].time*1000))
                                 i++
                             });
                         }
                     }
                 )
-            },
-
-            filterItems(){
-                console.log(this.filter)
-            },
-
-            sortItems(){
-                console.log(this.sort)
             }
         }
     }
