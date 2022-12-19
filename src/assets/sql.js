@@ -72,5 +72,17 @@ export default{
 
     DeleteEmployee(){
         return SQLlink + 'deleteEmployee.php'
-    }
+    },
+
+    AddProduct(){
+        return SQLlink + 'addProduct.php'
+    },
+
+    DeleteProduct(){
+        return SQLlink + 'deleteProduct.php'
+    },
+
+    UpdateProduct(){
+        return SQLlink + 'updateProduct.php'
+    },
 }

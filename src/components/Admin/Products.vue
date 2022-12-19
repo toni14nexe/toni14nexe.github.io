@@ -3,11 +3,16 @@
         <h1 class="title title-admin" style="font-size: 2.5rem;">Products</h1>
     </div>
     <div class="d-flex flex-row justify-content-center mt-2">
+        <h3 class="a mx-3" @click="component = 'list'" :class="{active: component == 'list'}">List</h3>
+        <div class="vl"></div>
         <h3 class="a mx-3" @click="component = 'add'" :class="{active: component == 'add'}">Add</h3>
         <div class="vl"></div>
         <h3 class="a mx-3" @click="component = 'edit'" :class="{active: component == 'edit'}">Edit</h3>
         <div class="vl"></div>
         <h3 class="a mx-3" @click="component = 'delete'" :class="{active: component == 'delete'}">Delete</h3>
+    </div>
+    <div v-if="component == 'list'" class="mt-5">
+        <PriceList />
     </div>
     <div v-if="component == 'add'" class="mt-5">
         <div class="d-flex flex-row justify-content-center mb-5 text-center">
@@ -98,6 +103,14 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div v-if="drinkOrFoodEdit == 'drink'">
+                <div 
+                    class="d-flex flex-row justify-content-center mb-5 text-center" 
+                    style="margin-right: 24px"
+                >
+                    <select v-model="drinkEdit" class="ml-4" @change="setDeleteEdit">
+                        <option v-bind:key="item" v-for="item in drinks">{{item.name}}</option>
+                    </select>
+                </div>
                 <div class="d-flex flex-row justify-content-end">
                     <h3 class="small-title">Name:</h3>
                     <input class="ml-4" type="text" v-model="drinkNameEdit">
@@ -130,7 +143,7 @@
                 </div>
                 <div class="d-flex flex-row mt-5 justify-content-center">
                     <button 
-                        :disabled="(!drinkNameEdit.length || drinkPriceEdit<=0 || !drinkAmountEdit.length || !drinkTypeEdit.length)" 
+                        :disabled="(!drinkNameEdit.length || drinkPriceEdit<=0 || !drinkAmountEdit.length || !drinkTypeEdit.length || !drinkEdit.length)" 
                         class="my-btn" @click="edit()">Edit</button
                     >
                 </div>
@@ -138,6 +151,14 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div v-if="drinkOrFoodEdit == 'food'">
+                <div 
+                    class="d-flex flex-row justify-content-center mb-5 text-center" 
+                    style="margin-right: 24px"
+                >
+                    <select v-model="foodEdit" class="ml-4" @change="setDeleteEdit">
+                        <option v-bind:key="item" v-for="item in food">{{item.name}}</option>
+                    </select>
+                </div>
                 <div class="d-flex flex-row justify-content-end">
                     <h3 class="small-title">Name:</h3>
                     <input class="ml-4" type="text" v-model="foodNameEdit">
@@ -162,7 +183,7 @@
                 </div>
                 <div class="d-flex flex-row mt-5 justify-content-center">
                     <button 
-                        :disabled="(!foodNameEdit.length || foodPriceEdit<=0 || !foodTypeEdit.length || !foodDescriptionEdit.length)" 
+                        :disabled="(!foodNameEdit.length || foodPriceEdit<=0 || !foodTypeEdit.length || !foodDescriptionEdit.length || !foodEdit.length)" 
                         class="my-btn" @click="edit()">Edit</button
                     >
                 </div>
@@ -176,61 +197,40 @@
                 <option value="food" class="text-center">Food</option>
             </select>
         </div>
-        <div v-if="drinkOrFoodDelete == 'drink'" 
-            class="d-flex flex-row justify-content-center mb-2 text-center" 
-            style="margin-right: 24px"
-        >
-        <select v-model="drinkTypeDelete" class="ml-4">
-            <option value="hot" class="text-center">Hot</option>
-            <option value="juice" class="text-center">Juice</option>
-            <option value="beer" class="text-center">Beer</option>
-            <option value="alcohol" class="text-center">Alcohol</option>
-            <option value="wine" class="text-center">Wine</option>
-        </select>
-        </div>
         <div v-if="drinkOrFoodDelete == 'drink'"
             class="d-flex flex-row justify-content-center mb-5 text-center" 
             style="margin-right: 24px"
         >
-            <select v-model="drinkDelete" class="ml-4" :disabled="!drinkTypeDelete.length">
-                <option value="sok1" class="text-center">sok1</option>
-                <option value="sok2" class="text-center">sok2</option>
-                <option value="sok3" class="text-center">sok3</option>
+            <select v-model="drinkDelete" class="ml-4">
+                <option v-bind:key="item" v-for="item in drinks">{{item.name}}</option>
             </select>
         </div>
         <div v-if="drinkOrFoodDelete == 'drink'" class="d-flex flex-row justify-content-center">
-            <button :disabled="(!drinkTypeDelete.length || !drinkDelete.length)" class="my-btn" @click="deleteItem">Delete</button>
-        </div>
-        <div v-if="drinkOrFoodDelete == 'food'" 
-            class="d-flex flex-row justify-content-center mb-2 text-center" 
-            style="margin-right: 24px"
-        >
-        <select v-model="foodTypeDelete" class="ml-4">
-            <option value="soup" class="text-center">Soup</option>
-            <option value="pizza" class="text-center">Pizza</option>
-            <option value="grill" class="text-center">Grill</option>
-            <option value="dish" class="text-center">Dish</option>
-            <option value="dessert" class="text-center">Dessert</option>
-        </select>
+            <button :disabled="(!drinkDelete.length)" class="my-btn" @click="deleteItem">Delete</button>
         </div>
         <div v-if="drinkOrFoodDelete == 'food'" 
             class="d-flex flex-row justify-content-center mb-5 text-center" 
             style="margin-right: 24px"
         >
-            <select v-model="foodDelete" class="ml-4" :disabled="!foodTypeDelete.length">
-                <option value="hrana1" class="text-center">hrana1</option>
-                <option value="hrana2" class="text-center">hrana2</option>
-                <option value="hrana3" class="text-center">hrana3</option>
+            <select v-model="foodDelete" class="ml-4">
+                <option v-bind:key="item" v-for="item in food">{{item.name}}</option>
             </select>
         </div>
         <div v-if="drinkOrFoodDelete == 'food'" class="d-flex flex-row justify-content-center">
-            <button :disabled="(!foodTypeDelete.length || !foodDelete.length)" class="my-btn" @click="deleteItem">Remove</button>
+            <button :disabled="(!foodDelete.length)" class="my-btn" @click="deleteItem">Remove</button>
         </div>
     </div>
 </template>
 
 <script>
+    import PriceList from '../PriceList.vue'
+    import sql from '../../assets/sql.js'
+    import axios from 'axios'
+
     export default {
+        components:{
+            PriceList
+        },
         data(){
             return{
                 component: null,
@@ -239,7 +239,6 @@
                 drinkOrFoodDelete: null,
                 drinkType: null,
                 drinkTypeEdit: null,
-                drinkTypeDelete: '',
                 drinkDelete: '',
                 foodName: '',
                 foodNameEdit: '',
@@ -249,8 +248,8 @@
                 foodDescriptionEdit: '',
                 foodType: '',
                 foodTypeEdit: '',
-                foodTypeDelete: '',
                 foodDelete: '',
+                foodEdit: '',
                 drinkName: '',
                 drinkNameEdit: '',
                 drinkPrice: null,
@@ -258,20 +257,93 @@
                 drinkAmount: '',
                 drinkAmountEdit: '',
                 drinkType: '',
-                drinkTypeEdit: ''
+                drinkTypeEdit: '',
+                drinkEdit: '',
+                productsList: [],
+                drinks: [],
+                food: []
             }
         },
+        async mounted(){
+            this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
+            this.productsList = this.productsList.data
+            this.sort()
+        },
         methods:{
+            sort(){
+                this.productsList.forEach(product => {
+                    if(product.mainType == 'drink'){
+                        this.drinks.push(product)
+                    }else{
+                        this.food.push(product)
+                    }
+                });
+            },
+
             add(){
-                console.log('add')
+                if(this.drinkOrFood == 'drink'){
+                    window.location = sql.AddProduct() + '?name=' + this.drinkName + '&price=' + this.drinkPrice + '&description=' + this.drinkAmount
+                        + '&type=' + this.drinkType + '&mainType=drink'
+                }else{
+                    window.location = sql.AddProduct() + '?name=' + this.foodName + '&price=' + this.foodPrice + '&description=' + this.foodDescription
+                        + '&type=' + this.foodType + '&mainType=food'
+                }
             },
 
             edit(){
-                console.log('edit')
+                if(this.drinkOrFoodEdit == 'drink'){
+                    this.drinks.forEach(drink => {
+                        if(drink.name == this.drinkEdit){
+                            window.location = sql.UpdateProduct() + '?id=' + drink.id + '&name=' + this.drinkNameEdit
+                                + '&price=' + this.drinkPriceEdit + '&description=' + this.drinkAmountEdit + '&type=' + this.drinkTypeEdit
+                        }
+                    });
+                }else{
+                    this.food.forEach(food => {
+                        if(food.name == this.foodEdit){
+                            window.location = sql.UpdateProduct() + '?id=' + food.id + '&name=' + this.foodNameEdit
+                                + '&price=' + this.foodPriceEdit + '&description=' + this.foodDescriptionEdit + '&type=' + this.foodTypeEdit
+                        }
+                    });
+                }
             },
 
             deleteItem(){
-                console.log('delete')
+                if(this.drinkOrFoodDelete == 'drink'){
+                    this.drinks.forEach(drink => {
+                        if(drink.name == this.drinkDelete){
+                            window.location = sql.DeleteProduct() + '?id=' + drink.id
+                        }
+                    });
+                }else{
+                    this.food.forEach(food => {
+                        if(food.name == this.foodDelete){
+                            window.location = sql.DeleteProduct() + '?id=' + food.id
+                        }
+                    });
+                }
+            },
+
+            setDeleteEdit(){
+                if(this.drinkOrFoodEdit == 'drink'){
+                    this.drinks.forEach(drink => {
+                        if(drink.name == this.drinkEdit){
+                            this.drinkNameEdit = drink.name
+                            this.drinkPriceEdit = drink.price
+                            this.drinkAmountEdit = drink.description
+                            this.drinkTypeEdit = drink.type
+                        }
+                    });
+                }else{
+                    this.food.forEach(food => {
+                        if(food.name == this.foodEdit){
+                            this.foodNameEdit = food.name
+                            this.foodPriceEdit = food.price
+                            this.foodDescriptionEdit = food.description
+                            this.foodTypeEdit = food.type
+                        }
+                    });
+                }
             }
         }
     }
