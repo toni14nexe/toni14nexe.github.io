@@ -167,6 +167,7 @@
         async mounted(){
             this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
             this.getProductsList()
+            this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
         },
         methods:{
             getProductsList(){

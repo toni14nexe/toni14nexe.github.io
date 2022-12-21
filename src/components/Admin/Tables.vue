@@ -5,17 +5,22 @@
     <div class="d-flex flex-row justify-content-center mt-2">
         <h3 class="a mx-3" @click="component = 'list'" :class="{active: component == 'list'}">List</h3>
         <div class="vl"></div>
-        <h3 v-if="tableNumber < 10" class="a mx-3" @click="component = 'add'" :class="{active: component == 'add'}">Add</h3>
-        <div v-if="tableNumber < 10" class="vl"></div>
+        <h3 class="a mx-3" @click="component = 'add'" :class="{active: component == 'add'}">Add</h3>
+        <div class="vl"></div>
         <h3 class="a mx-3" @click="component = 'remove'" :class="{active: component == 'remove'}">Remove</h3>
     </div>
     <div v-if="component == 'add'" class="mt-5">
-        <div class="d-flex flex-row justify-content-center mb-5 text-center">
-            <h3 class="small-title">Are you sure you want to add new table?</h3>
+        <div v-if="tableNumber < 10">
+            <div class="d-flex flex-row justify-content-center mb-5 text-center">
+                <h3 class="small-title">Are you sure you want to add new table?</h3>
+            </div>
+            <div class="d-flex flex-row justify-content-center mb-5 text-center">
+                <button class="delete my-btn mx-2" @click="closeTable">Close</button>
+                <button class="my-btn mx-2" @click="addTable">Add</button>
+            </div>
         </div>
-        <div class="d-flex flex-row justify-content-center mb-5 text-center">
-            <button class="delete my-btn mx-2" @click="closeTable">Close</button>
-            <button class="my-btn mx-2" @click="addTable">Add</button>
+        <div v-else class="d-flex flex-row justify-content-center mb-5 text-center">
+            <h3 class="small-title">You reach your maximum table number!</h3>
         </div>
     </div>
     <div v-if="component == 'remove'" class="mt-5">
@@ -31,11 +36,17 @@
         <div class="d-flex flex-row justify-content-center mb-5 text-center">
             <h3 class="small-title">Table list</h3>
         </div>
+        <div v-bind:key="number" v-for="number in tableNumber" 
+            class="d-flex flex-row justify-content-center text-center"
+        >
+            <h3 class="small-title border-bottom pb-1">Table-{{ number }}</h3>
+        </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import sql from '../../assets/sql.js'
 
     export default {
         data(){
@@ -57,15 +68,20 @@
 
             closeTable(){
                 this.component = null
-                console.log('close')
             },
 
             addTable(){
-                console.log('add')
+                let fullname = 'Table ' + (this.tableNumber + 1)
+                let username = 'table' + (this.tableNumber + 1)
+                let password = 'dba1350c0b190d36b28b2a1514ff0f31'
+                let newTableNum = this.tableNumber + 1
+                window.location = sql.AddTable() + '?username=' + username + '&password=' + password + '&fullname=' + fullname + '&newTableNum=' + newTableNum
             },
 
             deleteTable(){
-                console.log('delete')
+                let username = 'table' + (this.tableNumber)
+                let newTableNum = this.tableNumber - 1
+                window.location = sql.DeleteTable() + '?username=' + username + '&newTableNum=' + newTableNum
             }
         }
     }
@@ -92,5 +108,9 @@
 
     .delete:hover{
         background-color: red;
+    }
+
+    .border-bottom{
+        border-bottom: 2px solid white;
     }
 </style>

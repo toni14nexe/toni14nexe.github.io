@@ -85,4 +85,12 @@ export default{
     UpdateProduct(){
         return SQLlink + 'updateProduct.php'
     },
+
+    AddTable(){
+        return SQLlink + 'tables/addTable.php'
+    },
+
+    DeleteTable(){
+        return SQLlink + 'tables/deleteTable.php'
+    },
 }
