@@ -50,6 +50,7 @@
         top: 40%;
         left: 25%;
         transform: translate(-50%, -50%);
+        font-weight: 700;
     }
 
     .centered-number{
@@ -66,6 +67,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 500%;
+        font-weight: 700;
     }
 
     h1{
