@@ -5,14 +5,13 @@
     <div>
         <div v-if="orders.length < 1" style="display: none">{{getOrders()}}</div>
         <div class="table-div mt-3 pb-5">
-            <div class="d-flex flex-row justify-content-end">
-                <h3 class="notification">Chef: {{fullname}}</h3>
-            </div>
                 <div class="d-flex flex-row justify-content-center">
                     <h1 class="table-main-title" >Orders: {{totalOrders}}</h1>
                 </div>
                 <div v-for="order in orders" >
-                    <div v-if="(!order[0].chef && order[0] && order[0].empty == false)" class="order-div pt-2 pl-3 pr-3 pb-3">
+                    <div v-if="(!order[0].chef && order[0] && order[0].empty == false)" 
+                        class="order-div pt-2 pl-3 pr-3 pb-3"
+                    >
                         <div class="d-flex flex-row justify-content-between">
                             <h4>{{order[0].tableName}}</h4>
                             <h4>{{order[0].time}}</h4>
