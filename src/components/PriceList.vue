@@ -1,4 +1,7 @@
 <template>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <div >
         <div class="table-div">
             <div v-bind:key="mainType.id" v-for="mainType in mainTypes" style="padding-bottom: 40px">

@@ -1,4 +1,7 @@
 <template>
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
   <div><!-- ------------ dovršiti to ------------ -->
     <navbar :role="role" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" 
     @cart="currentComponent = 'Cart'" @logout="logout()" @firstPage="switchToFirstPage()" :bill="bill"
@@ -122,12 +125,14 @@
           },
 
           async getTableAPI(){
-            this.APICart = await axios.get('https://toni-web.com/thepurplehat/tables/' + this.username)
-            this.APICart = this.APICart.data
-            if(this.APICart.length > 0){
-              this.APICart = JSON.parse(this.APICart)
-              this.bill = true
-            }
+            await axios.get('https://toni-web.com/thepurplehat/tables/' + this.username)
+            .then((result) =>{
+              this.APICart = result.data
+              if(this.APICart.length > 0){
+                this.APICart = JSON.parse(this.APICart)
+                this.bill = true
+              }
+            })
           },
 
           async getTableNumber(){

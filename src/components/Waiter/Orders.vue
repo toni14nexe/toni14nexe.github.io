@@ -1,6 +1,8 @@
 <template>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <div>
-        
         <div v-if="orders.length < 1" style="display: none">{{getOrders()}}</div>
         <div class="table-div mt-3 pb-5">
             <div class="d-flex flex-row justify-content-end">

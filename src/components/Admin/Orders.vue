@@ -1,4 +1,7 @@
 <template>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <div class="d-flex flex-row justify-content-center mt-4">
         <h1 class="title title-admin" style="font-size: 2.5rem;">Orders</h1>
     </div >

@@ -30,7 +30,7 @@
                   <input v-model="password" @change="usernameMessage = null" type="password" id="typePasswordX" class="my-input form-control form-control-lg" placeholder="Password" />
                   <label class="form-label" for="typePasswordX">Password</label>
                 </div>
-                <p class="small mb-5 pb-lg-2"><a class="link" @click="switchToForgotPassword" href="#">Forgot password?</a></p>
+                <!--<p class="small mb-5 pb-lg-2"><a class="link" @click="switchToForgotPassword" href="#">Forgot password?</a></p>-->
                 <button @click="LogIn()" class="my-btn btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               </div>
 
