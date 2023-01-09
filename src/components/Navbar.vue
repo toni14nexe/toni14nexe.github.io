@@ -8,19 +8,21 @@
         </a>
 
         <div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa-solid fa-list-ul fa-bars text-white"></i>
-          </button>
-          
+          <div class="d-flex justify-content-end">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fa-solid fa-list-ul fa-bars text-white"></i>
+            </button>
+          </div>
+
           <form v-if="!role || tokenAlive" class="form-inline">
             <div class="collapse navbar-collapse my-2 my-lg-0" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Price List</span>
+                  <span class="a d-flex justify-content-center" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Price List</span>
                 </li>
                 <div class="vl"></div>
                 <li class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('login')" :class="{active: currentComponent == 'LogIn'}" href="#">LogIn</span>
+                  <span class="a d-flex justify-content-center" @click="$emit('login')" :class="{active: currentComponent == 'LogIn'}" href="#">LogIn</span>
                 </li>
               </ul>
             </div>
@@ -30,19 +32,19 @@
             <div class="collapse navbar-collapse my-2 my-lg-0" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li v-if="role == 'table'" class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Order</span>
+                  <span class="a d-flex justify-content-center" @click="$emit('priceList')" :class="{active: currentComponent == 'PriceList'}" href="#">Order</span>
                 </li>
                 <div v-if="role == 'table'" class="vl"></div>
                 <li v-if="role == 'table'" class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('cart')" :class="{active: currentComponent == 'Cart'}" href="#">Cart</span>
+                  <span class="a d-flex justify-content-center" @click="$emit('cart')" :class="{active: currentComponent == 'Cart'}" href="#">Cart</span>
                 </li>
                 <div v-if="role == 'table' && bill" class="vl"></div>
                 <li v-if="role == 'table' && bill" class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('bill')" :class="{active: currentComponent == 'Bill'}" href="#">Bill</span>
+                  <span class="a d-flex justify-content-center" @click="$emit('bill')" :class="{active: currentComponent == 'Bill'}" href="#">Bill</span>
                 </li>
                 <div v-if="role == 'table'" class="vl"></div>
                 <li class="nav-item mr-sm-2">
-                  <span class="a" @click="$emit('logout')" href="#">LogOut</span>
+                  <span class="a d-flex justify-content-center" @click="$emit('logout')" href="#">LogOut</span>
                 </li>
               </ul>
             </div>
@@ -77,5 +79,11 @@
 <style scoped>
   .a{
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 991px) {
+    li{
+      margin-top: 5px;
+    }
   }
 </style>
