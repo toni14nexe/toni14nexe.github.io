@@ -85,4 +85,23 @@
     .v-leave-active{
         transition: all 0.3s ease;
     }
+
+    @media screen and (max-width: 779px) {
+        .toast{
+            text-align: left !important;
+            padding-left: 5px;
+            padding-top: 15px;
+            min-width: 70%;
+        }
+    }
+
+    @media screen and (max-width: 312px) {
+        .toast{
+            margin-top: 50px;
+        }
+
+        .x-btn{
+            margin-top: 50px;
+        }
+    }
 </style>

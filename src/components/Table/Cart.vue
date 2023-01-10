@@ -4,21 +4,21 @@
             <button class="btn" @click="$emit('firstPage')">Back to order</button>
     </div>
 
-    <div v-else class="d-flex justify-content-center flex-column table-div">
+    <div v-else class="d-flex justify-content-center flex-column table-div xs-margin">
         <h1 class="table-main-title" >Cart</h1>
         <div style="width: 100%">
             <table>
                 <tr>
                     <th style="text-align: left; padding-left: 10px;">Name</th>
                     <th style="text-align: center; padding-right: 10px;">Quantity</th>
-                    <th style="text-align: center; padding-right: 10px;">Price</th>
+                    <th class="price-display" style="text-align: center; padding-right: 10px;">Price</th>
                     <th style="text-align: center;">Sequence</th>
                     <th></th>
                 </tr>
                 <tr v-for="item in list" style="padding-bottom: 40px">
                     <td style="text-align: left; padding-left: 10px;">{{item.name}}</td>
                     <td style="text-align: center; padding-right: 10px;">{{item.quantity}}</td>
-                    <td style="text-align: center; padding-right: 10px;">{{(item.price*item.quantity).toFixed(2)}} €</td>
+                    <td class="price-display" style="text-align: center; padding-right: 10px;">{{(item.price*item.quantity).toFixed(2)}} €</td>
                     <td>
                         <select :id=item.name @change="changeSequence(item.name)">
                             <option value="1">1</option>
@@ -39,11 +39,11 @@
             <table style="margin-top: 50px;">
                 <tr style="background-color: var(--gray); margin-top: 50px;;">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.9rem; font-weight: 600;">Total:</td>
+                    <td class="font-size-total" style="text-align: right; padding-right: 10px;background-color: var(--gray); font-weight: 600;">Total:</td>
                 </tr>
                 <tr style="background-color: var(--gray);">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.8rem; font-weight: 600;">{{total.toFixed(2)}} €</td>
+                    <td class="font-size-price" style="text-align: right; padding-right: 10px;background-color: var(--gray); font-weight: 600;">{{total.toFixed(2)}} €</td>
                 </tr>
             </table>
         </div>
@@ -257,5 +257,137 @@ export default {
 
     input:focus{
         border-color: var(--gray);
+    }
+
+    .font-size-total{
+        font-size: 1.9rem;
+    }
+
+    .font-size-price{
+        font-size: 1.8rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        tr{
+            font-size: 1rem;
+        }
+
+        th{
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .btn{
+            height: 33px;
+            padding: 3px 3px 3px 3px;
+        }
+    }
+
+    @media screen and (max-width: 599px) {
+        .table-main-title{
+            font-size: 1.4rem;
+        }
+
+        tr{
+            font-size: 0.8rem;
+        }
+
+        th{
+            font-size: 0.8rem;
+        }
+
+        td{
+            font-size: 1rem;
+        }
+
+        .btn{
+            max-width: 150px;
+        }
+
+        .remove-btn{
+            max-height: 15px;
+            max-width: 15px;
+        }
+
+        .font-size-total{
+            font-size: 1.4rem;
+        }
+
+        .font-size-price{
+            font-size: 1.3rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        tr{
+            font-size: 1rem;
+        }
+
+        th{
+            font-size: 1rem;
+        }
+
+        .btn{
+            height: 33px;
+            padding: 3px 3px 3px 3px;
+        }
+    }
+
+    @media screen and (max-width: 459px) {
+        tr{
+            font-size: 0.8rem;
+        }
+
+        th{
+            font-size: 0.8rem;
+        }
+
+        .btn{
+            font-size: 0.8rem;
+            max-width: 100px;
+        }
+    }
+
+    @media screen and (max-width: 459px) {
+        tr{
+            font-size: 0.6rem;
+        }
+
+        th{
+            font-size: 0.6rem;
+        }
+
+        td{
+            font-size: 0.8rem;
+        }
+
+        .btn{
+            font-size: 0.8rem;
+            max-width: 100px;
+        }
+    }
+
+    @media screen and (max-width: 399px) {
+        .price-display{
+            display: none;
+        }
+
+        td{
+            font-size: 0.7rem;
+        }
+
+        .small-title{
+            font-size: 1.1rem;
+        }
+    }
+
+    @media screen and (max-width: 312px) {
+        .xs-margin{
+            margin-top: 20%;
+        }
+
+        td{
+            font-size: 0.5rem;
+        }
     }
 </style>

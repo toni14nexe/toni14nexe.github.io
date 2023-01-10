@@ -325,4 +325,39 @@
     .btn:hover{
         background-color: var(--purple);
     }
+
+    @media screen and (max-width: 768px) {
+        tr{
+            font-size: 1rem;
+        }
+
+        .btn{
+            height: 33px;
+            padding: 3px 3px 3px 3px;
+        }
+
+        .num-input{
+            max-width: 35px;
+        }
+    }
+
+    @media screen and (max-width: 530px) {
+        .btn{
+            margin-top: 3px;
+        }
+    }
+
+    @media screen and (max-width: 399px) {
+        tr{
+            font-size: 0.7rem;
+        }
+
+        th{
+            font-size: 0.8rem;
+        }
+
+        .table-title{
+            font-size: 1.2rem;
+        }
+    }
 </style>

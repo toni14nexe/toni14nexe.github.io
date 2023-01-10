@@ -184,4 +184,12 @@
     border-radius: 15px;
     max-width: 100%;
   }
+
+  .text-uppercase{
+    font-size: 1.4rem;
+  }
+
+  h2{
+    font-size: 1.2rem;
+  }
 </style>

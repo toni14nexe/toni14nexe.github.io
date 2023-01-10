@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="xs-margin">
     <navbar @login="currentComponent = 'LogIn'" :currentComponent="currentComponent" @priceList="currentComponent = 'PriceList'" @firstPage="firstPage()"/>
 
     <KeepAlive>
@@ -119,5 +119,16 @@
     }
   </script>
   
-  <style>
+  <style scoped>
+    @media screen and (max-width: 388px) {
+        .xs-margin{
+            margin-top: 20%;
+        }
+    }
+
+    @media screen and (max-width: 312px) {
+        .xs-margin{
+            margin-top: 40%;
+        }
+    }
   </style>
