@@ -167,7 +167,7 @@
                 toastTriggerCounter: 0
             }
         },created() {
-            setInterval(() => this.productsList = await axios.get('https://toni-web.com/thepurplehat/api'), 10000);
+            setInterval(() => this.getFromTableAPI, 10000);
         },
         async mounted(){
             this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
@@ -175,6 +175,10 @@
             this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
         },
         methods:{
+            async getFromTableAPI(){
+                this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
+            },
+
             getProductsList(){
                 var j = 0
                 for(var i=0; i<this.productsList.data.length; i++){
