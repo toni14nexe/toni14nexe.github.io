@@ -70,6 +70,7 @@
           if(this.role == 'table'){
             this.getTableAPI()
             this.switchToFirstPage()
+            this.getTableAPI()
           }
         },
         methods:{
