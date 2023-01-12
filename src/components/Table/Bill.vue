@@ -8,23 +8,23 @@
                     <th style="text-align: left; padding-left: 10px;">Name</th>
                     <th style="text-align: center; padding-right: 10px;">Sequence</th>
                     <th style="text-align: center; padding-right: 10px;">Quantity</th>
-                    <th style="text-align: center;">Price</th>
+                    <th class="price-display" style="text-align: center;">Price</th>
                 </tr>
                 <tr v-for="item in APICart" style="padding-bottom: 40px">
                     <td style="text-align: left; padding-left: 10px;">{{item.name}}</td>
                     <td style="text-align: center; padding-right: 10px;">{{item.sequence}}</td>
                     <td style="text-align: center; padding-right: 10px;">{{item.quantity}}</td>
-                    <td>{{(item.price*item.quantity).toFixed(2)}} €</td>
+                    <td class="price-display">{{(item.price*item.quantity).toFixed(2)}} €</td>
                 </tr>
             </table>
             <table style="margin-top: 50px;">
                 <tr style="background-color: var(--gray); margin-top: 50px;;">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.9rem; font-weight: 600;">Total:</td>
+                    <td class="price-font" style="text-align: right; padding-right: 10px;background-color: var(--gray); font-weight: 600;">Total:</td>
                 </tr>
                 <tr style="background-color: var(--gray);">
                     <td></td><td></td>
-                    <td style="text-align: right; padding-right: 10px;background-color: var(--gray); font-size: 1.8rem; font-weight: 600;">{{total.toFixed(2)}} €</td>
+                    <td class="price-font" style="text-align: right; padding-right: 10px;background-color: var(--gray); font-weight: 600;">{{total.toFixed(2)}} €</td>
                 </tr>
             </table>
         </div>
@@ -119,5 +119,87 @@
 
     .remove-btn{
         margin-top: -6px;
+    }
+
+    .price-font{
+        font-size: 1.8rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        tr{
+            font-size: 1rem;
+        }
+
+        th{
+            font-size: 1rem;
+        }
+
+        .btn{
+            height: 33px;
+            padding: 3px 3px 3px 3px;
+            max-width: 150px;
+        }
+
+        .price-font{
+            font-size: 1.2rem;
+        }
+    }
+
+    @media screen and (max-width: 459px) {
+        tr{
+            font-size: 0.8rem;
+        }
+
+        th{
+            font-size: 0.8rem;
+        }
+
+        .btn{
+            font-size: 0.8rem;
+            max-width: 100px;
+        }
+    }
+
+    @media screen and (max-width: 459px) {
+        tr{
+            font-size: 0.6rem;
+        }
+
+        th{
+            font-size: 0.6rem;
+        }
+
+        td{
+            font-size: 0.8rem;
+        }
+
+        .btn{
+            font-size: 0.8rem;
+            max-width: 100px;
+        }
+    }
+
+    @media screen and (max-width: 399px) {
+        .price-display{
+            display: none;
+        }
+
+        td{
+            font-size: 0.7rem;
+        }
+
+        .small-title{
+            font-size: 1.1rem;
+        }
+    }
+
+    @media screen and (max-width: 312px) {
+        td{
+            font-size: 0.5rem;
+        }
+
+        .price-font{
+            font-size: 1rem;
+        }
     }
 </style>

@@ -1,5 +1,5 @@
 export default{
     link(){
-        return 'http://localhost:5173/'
+        return 'https://toni-web.com/'
     }
 }

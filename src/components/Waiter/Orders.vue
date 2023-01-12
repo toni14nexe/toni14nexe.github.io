@@ -129,8 +129,12 @@
                 totalOrdersForPayment: 0
             }
         },
+        created() {
+            setInterval(() => this.getOrders(), 10000);
+        },
         methods:{
             async getOrders(){
+                this.totalOrders = 0
                 let j=0
                 for(let i=1; i<=this.tableNumber; i++){
                     await axios.get('https://toni-web.com/thepurplehat/tables/table' + i)
