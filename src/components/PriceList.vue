@@ -166,6 +166,8 @@
                 toastText: 'Added to cart!',
                 toastTriggerCounter: 0
             }
+        },created() {
+            setInterval(() => this.productsList = await axios.get('https://toni-web.com/thepurplehat/api'), 10000);
         },
         async mounted(){
             this.productsList = await axios.get('https://toni-web.com/thepurplehat/api')
