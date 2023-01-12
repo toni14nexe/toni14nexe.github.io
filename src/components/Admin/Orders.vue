@@ -48,12 +48,15 @@
         methods:{
             async getTableNumber(){
                 this.tableNumber = await axios.get('https://toni-web.com/thepurplehat/tables/tableNumber')
+                this.tableNumber = await axios.get('https://toni-web.com/thepurplehat/tables/tableNumber')
             },
 
             ordersSelected(){
                 if(this.ordersSelect == 'active'){
                     this.getOrders()
+                    this.getOrders()
                 } else{
+                    this.getFinishedOrders()
                     this.getFinishedOrders()
                 }
             },

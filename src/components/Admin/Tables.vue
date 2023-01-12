@@ -60,6 +60,7 @@
         },
         mounted(){
             this.getTableNumber()
+            this.getTableNumber()
         },
         methods:{
             async getTableNumber(){
