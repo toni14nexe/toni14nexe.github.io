@@ -145,6 +145,7 @@
         methods:{
             async getEmployees(){
                 this.employees = await axios.get('https://toni-web.com/thepurplehat/employees')
+                this.employees = await axios.get('https://toni-web.com/thepurplehat/employees')
             },
 
             addWaiter(){
